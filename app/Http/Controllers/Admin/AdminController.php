@@ -13,10 +13,16 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
-    public function login(Request $request): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+    public function login(Request $request)
     {
         if ($request->isMethod('post')) {
             $data = $request->all();
+
+            $request->validate([
+                'email' => 'required|email|max:255',
+                'password' => 'required|max:30',
+            ]);
+
             if (Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password']])) {
                 return redirect('admin/dashboard');
             } else {
