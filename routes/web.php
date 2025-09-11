@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -7,10 +8,11 @@ Route::get('/', function () {
 });
 
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function () {
-    Route::match(['get', 'post'],'login', 'AdminController@login')->name('login');
+    Route::match(['get', 'post'],'login', [AdminController::class, 'login'])->name('login');
     Route::group(['middleware' => ['admin']], function () {
-        Route::get('dashboard', 'AdminController@dashboard')->name('dashboard');
-        Route::get('logout', 'AdminController@logout')->name('logout');
+        Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::get('update-password', [AdminController::class, 'updatePassword'])->name('update-password');
+        Route::get('logout', [AdminController::class, 'logout'])->name('logout');
     });
 
 });

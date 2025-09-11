@@ -39,4 +39,9 @@ class AdminController extends Controller
 
         return redirect('admin/login');
     }
+
+    public function updatePassword()
+    {
+        return view('admin.update_password');
+    }
 }
