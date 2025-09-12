@@ -34,7 +34,8 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form>
+                            <form method="post" action="{{ url('admin/update-password') }}">
+                                @csrf
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="admin_email">Email address</label>
@@ -44,7 +45,7 @@
                                     <div class="form-group">
                                         <label for="current_pwd">Current Password</label>
                                         <input type="password" class="form-control" id="current_pwd" name="current_pwd"
-                                               placeholder="Current Password">
+                                               placeholder="Current Password"><span id="verifyCurrentPwd"></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="new_pwd">New Password</label>
@@ -58,6 +59,10 @@
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
+
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
                             </form>
                         </div>
                         <!-- /.card -->
