@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
@@ -79,6 +80,36 @@ class AdminController extends Controller
         } else {
             return "false";
         }
+    }
+
+    public function updateDetails(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $data = $request->all();
+
+            $request->validate([
+                'admin_name' => 'required|regex:/^[\pL\s\-]+$/u|max:255',
+                'admin_mobile' => 'required|numeric|digits:10',
+            ]);
+
+            // Update Admin Details
+            Admin::where('email', $this->getGuardUser()->email)
+                ->update([
+                'name' => $data['admin_name'],
+                'mobile' => $data['admin_mobile']
+            ]);
+
+            return $this->backWithMessage('success_message', 'Admin details updated successfully.');
+
+
+            /*if (Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password']])) {
+                return redirect('admin/dashboard');
+            } else {
+                return $this->backWithMessage('error_message', 'Invalid Email or Password.');
+            }*/
+        }
+
+        return view('admin.update_details');
     }
 
     private function backWithMessage(string $message, string $title): RedirectResponse
