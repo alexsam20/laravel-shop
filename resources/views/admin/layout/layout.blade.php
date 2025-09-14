@@ -65,11 +65,20 @@
 <script src="{{ url('admin/plugins/jquery-mapael/maps/usa_states.min.js') }}"></script>
 <!-- ChartJS -->
 <script src="{{ url('admin/plugins/chart.js/Chart.min.js') }}"></script>
+<!-- DataTables  & Plugins -->
+<script src="{{ url('admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ url('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
 
 <!-- AdminLTE for demo purposes -->
 <script src="{{ url('admin/js/demo.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ url('admin/js/pages/dashboard2.js') }}"></script>
+<script>
+    $(function () {
+        $("#cmspages").DataTable();
+    });
+</script>
 </body>
 </html>
 
