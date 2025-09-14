@@ -19,6 +19,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         // Display CMS Pages
         Route::get('cms-pages', [CmsController::class, 'index'])->name('listing-page');
+        Route::post('update-cms-page-status', [CmsController::class, 'update'])->name('update-cms-page-status');
     });
 
 });

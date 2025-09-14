@@ -38,18 +38,36 @@
                                         <th>Title</th>
                                         <th>URL</th>
                                         <th>Created At</th>
-                                        <th>Actions</th>
+                                        <th>Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($cmsPages as $page)
-                                    <tr>
-                                        <td>{{ $page['id'] }}</td>
-                                        <td>{{ $page['title'] }}</td>
-                                        <td>{{ $page['url'] }}</td>
-                                        <td>{{ $page['created_at'] }}</td>
-                                        <td></td>
-                                    </tr>
+                                        <tr>
+                                            <td>{{ $page['id'] }}</td>
+                                            <td>{{ $page['title'] }}</td>
+                                            <td>{{ $page['url'] }}</td>
+                                            <td>{{ $page['created_at'] }}</td>
+                                            <td>
+                                                @if($page['status'] === 1)
+                                                    <a class="updateCmsPageStatus"
+                                                       id="page-{{ $page['id'] }}"
+                                                       page_id="{{ $page['id'] }}"
+                                                       style="color: #3f6ed3"
+                                                       href="javascript:void(0)">
+                                                        <i class="fas fa-toggle-on" status="Active"></i>
+                                                    </a>
+                                                @else
+                                                    <a class="updateCmsPageStatus"
+                                                       id="page-{{ $page['id'] }}"
+                                                       page_id="{{ $page['id'] }}"
+                                                       style="color: grey"
+                                                       href="javascript:void(0)">
+                                                        <i class="fas fa-toggle-off" status="Inactive"></i>
+                                                    </a>
+                                                @endif
+                                            </td>
+                                        </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
