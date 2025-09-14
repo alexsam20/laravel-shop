@@ -13,6 +13,9 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Intervention\Image\Image;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class AdminController extends Controller
 {
@@ -90,23 +93,40 @@ class AdminController extends Controller
             $request->validate([
                 'admin_name' => 'required|regex:/^[\pL\s\-]+$/u|max:255',
                 'admin_mobile' => 'required|numeric|digits:10',
+                'admin_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
+
+            // Upload Admin Image
+            if ($request->hasFile('admin_image')) {
+                $image_tmp = $request->file('admin_image');
+                if ($image_tmp->isValid()) {
+                    // Get Image Extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    // create image manager with desired driver
+                    $manager = new ImageManager(new Driver());
+                    // open an image file
+                    $image = $manager->read($image_tmp);
+                    // Generate New Image Name
+                    $imageName = rand(11111, 99999) . '.' . $extension;
+                    $imagePath = 'admin/img/photos/' . $imageName;
+                    $image->save($imagePath);
+
+                }
+            } else if (!empty($data['current_image'])) {
+                $imageName = $data['current_image'];
+            } else {
+                $imageName = "";
+            }
 
             // Update Admin Details
             Admin::where('email', $this->getGuardUser()->email)
                 ->update([
                 'name' => $data['admin_name'],
-                'mobile' => $data['admin_mobile']
+                'mobile' => $data['admin_mobile'],
+                'image' => $imageName,
             ]);
 
             return $this->backWithMessage('success_message', 'Admin details updated successfully.');
-
-
-            /*if (Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password']])) {
-                return redirect('admin/dashboard');
-            } else {
-                return $this->backWithMessage('error_message', 'Invalid Email or Password.');
-            }*/
         }
 
         return view('admin.update_details');
