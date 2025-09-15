@@ -40,20 +40,29 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
+                                @if($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <!-- form start -->
                                 <form method="post" name="cmsForm" id="cmsForm" action="{{ url('admin/add-edit-cms-page') }}" >
                                     @csrf
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for="title">Title*</label>
+                                            <label for="title">Title<span style="color: red">&nbsp;*</span></label>
                                             <input type="text" name="title" class="form-control" id="title" placeholder="Enter Page Title">
                                         </div>
                                         <div class="form-group">
-                                            <label for="url">URL*</label>
+                                            <label for="url">URL<span style="color: red">&nbsp;*</span></label>
                                             <input type="text" name="url" class="form-control" id="url" placeholder="Enter Page URL">
                                         </div>
                                         <div class="form-group">
-                                            <label for="description">Description*</label>
+                                            <label for="description">Description<span style="color: red">&nbsp;*</span></label>
                                             <textarea name="description" class="form-control" rows="3" id="description" placeholder="Enter Page Description"></textarea>
                                         </div>
                                         <div class="form-group">
