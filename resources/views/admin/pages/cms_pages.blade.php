@@ -78,6 +78,8 @@
                                                         <i class="fas fa-toggle-off" status="Inactive"></i>
                                                     </a>
                                                 @endif
+                                                &nbsp;
+                                                <a href="{{ url('admin/add-edit-cms-page/' . $page['id']) }}" style="color: #3f6ed3;"><i class="fas fa-edit"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
