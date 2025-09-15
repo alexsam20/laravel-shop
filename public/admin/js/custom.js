@@ -44,4 +44,37 @@ $(document).ready(function () {
             }
         });
     });
+
+    // Confirm the deletion of the CMS Page
+    /*$(document).on("click", ".confirmDelete", function () {
+        const name = $(this).attr("name");
+        return confirm("Are you sure you want to delete this " + name + "?");
+
+    });*/
+
+    // Confirm Deletion with SweetAlert
+    $(document).on("click", ".confirmDelete", function () {
+        const record = $(this).attr("record");
+        const recordid = $(this).attr("recordid");
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+                window.location.href= "/admin/delete-"+record+"/"+recordid;
+            }
+        });
+    });
+
 });
