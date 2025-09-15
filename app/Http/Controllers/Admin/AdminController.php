@@ -36,6 +36,15 @@ class AdminController extends Controller
             ]);
 
             if (Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password']])) {
+                // Remember Admin Email and Password with cookies
+                if (isset($data['remember']) && !empty($data['remember'])) {
+                    setcookie('email', $data['email'], time() + 3600);
+                    setcookie('password', $data['password'], time() + 3600);
+                } else {
+                    setcookie('email', "");
+                    setcookie('password', "");
+                }
+
                 return redirect('admin/dashboard');
             } else {
                 return $this->backWithMessage('error_message', 'Invalid Email or Password.');
