@@ -144,6 +144,13 @@ class AdminController extends Controller
         return view('admin.update_details');
     }
 
+    public function subadmins()
+    {
+        Session::put('page', 'subadmins');
+        $subadmins = Admin::where('type', 'subadmin')->get();
+        return view('admin.subadmins.subadmins', compact('subadmins'));
+    }
+
     private function backWithMessage(string $message, string $title): RedirectResponse
     {
         return redirect()->back()->with($message, $title);
