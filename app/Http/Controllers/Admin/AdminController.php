@@ -167,6 +167,46 @@ class AdminController extends Controller
         return response()->json(['status' => $status, 'subadmin_id' => $data['subadmin_id']]);
     }
 
+    public function addEditSubadmin(Request $request, $id = null)
+    {
+        //Session::put('page', 'cms-pages');
+        if ($id == "") {
+            $title = "Add Subadmin";
+            $subAdminData = new Admin();
+            $message = "Subadmin added successfully.";
+        } else {
+            $title = "Edit Subadmin";
+            $subAdminData = Admin::find($id);
+            $message = "Subadmin updated successfully.";
+        }
+
+        if ($request->isMethod("post")) {
+            $data = $request->all();
+            dd($data);
+
+            /*// CMS Pages Validations
+            $request->validate([
+                'title' => 'required|max:255',
+                'url' => 'required|max:255',
+                'description' => 'required',
+            ]);
+
+            $cmsPage->title = $data['title'];
+            $cmsPage->url = $data['url'];
+            $cmsPage->description = $data['description'];
+            $cmsPage->meta_title = $data['meta_title'];
+            $cmsPage->meta_description = $data['meta_description'];
+            $cmsPage->meta_keywords = $data['meta_keywords'];
+            $cmsPage->status = 1;
+
+            if ($cmsPage->save()) {
+                return redirect()->route('cms-pages')->with('success_message', $message);
+            }*/
+        }
+
+        return view('admin.subadmins.add_edit_subadmin', compact('title', 'subAdminData'));
+    }
+
     public function deleteSubadmin($id)
     {
         Admin::where('id', $id)->delete();
