@@ -13,7 +13,6 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 
@@ -149,6 +148,29 @@ class AdminController extends Controller
         Session::put('page', 'subadmins');
         $subadmins = Admin::where('type', 'subadmin')->get();
         return view('admin.subadmins.subadmins', compact('subadmins'));
+    }
+
+    public function updateSubadminStatus(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+//            dd($data);
+            if ($data['status'] == 'Active') {
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+        }
+
+        Admin::where('id', $data['subadmin_id'])->update(['status' => $status]);
+
+        return response()->json(['status' => $status, 'subadmin_id' => $data['subadmin_id']]);
+    }
+
+    public function deleteSubadmin($id)
+    {
+        Admin::where('id', $id)->delete();
+        return redirect()->back()->with('success_message', 'Sub Admin deleted successfully.');
     }
 
     private function backWithMessage(string $message, string $title): RedirectResponse

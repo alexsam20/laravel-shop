@@ -65,27 +65,26 @@
                                             <td>{{ $subadmin->type }}</td>
                                             <td>{{ date("F j, Y, g:i a", strtotime($subadmin->created_at)) }}</td>
                                             <td style="text-align: center">
-                                                {{--@if($page['status'] === 1)
-                                                    <a class="updateCmsPageStatus"
-                                                       id="page-{{ $page['id'] }}"
-                                                       page_id="{{ $page['id'] }}"
+                                                @if($subadmin->status === 1)
+                                                    <a class="updateSubadminStatus"
+                                                       id="subadmin-{{ $subadmin->id }}"
+                                                       subadmin_id="{{ $subadmin->id }}"
                                                        style="color: #3f6ed3"
                                                        href="javascript:void(0)">
                                                         <i class="fas fa-toggle-on" status="Active"></i>
                                                     </a>
                                                 @else
-                                                    <a class="updateCmsPageStatus"
-                                                       id="page-{{ $page['id'] }}"
-                                                       page_id="{{ $page['id'] }}"
+                                                    <a class="updateSubadminStatus"
+                                                       id="subadmin-{{ $subadmin->id }}"
+                                                       subadmin_id="{{ $subadmin->id }}"
                                                        style="color: grey"
                                                        href="javascript:void(0)">
                                                         <i class="fas fa-toggle-off" status="Inactive"></i>
                                                     </a>
                                                 @endif
                                                 &nbsp;
-                                                <a href="{{ url('admin/add-edit-cms-page/' . $page['id']) }}" style="color: #3f6ed3;"><i class="fas fa-edit"></i></a>
                                                 &nbsp;
-                                                <a href="javascript:void(0)" record="cms-page" recordid="{{ $page['id'] }}" <?php /*href="{{ url('admin/delete-cms-page/' . $page['id']) }}"*/ ?> class="confirmDelete" name="CMS Page" title="Delete CMS Page" style="color: #3f6ed3;"><i class="fas fa-trash"></i></a>--}}
+                                                <a href="javascript:void(0)" record="subadmin" recordid="{{ $subadmin->id }}" <?php /*href="{{ url('admin/delete-cms-page/' . $page['id']) }}"*/ ?> class="confirmDelete" name="Subadmin" title="Delete Subadmin" style="color: #3f6ed3;"><i class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

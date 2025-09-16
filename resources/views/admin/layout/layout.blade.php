@@ -90,7 +90,6 @@
 </script>
 <!-- Sweet Alert -->
 <script src="{{ url('admin/js/sweetalert2-v11.23.0.js') }}"></script>
-{{--<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
 </body>
 </html>
 
