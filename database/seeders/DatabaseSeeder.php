@@ -21,6 +21,6 @@ class DatabaseSeeder extends Seeder
 //        ]);
 
         $this->call(AdminsTableSeeder::class);
-//        $this->call(CmsPageTableSeeder::class);
+        $this->call(CmsPageTableSeeder::class);
     }
 }

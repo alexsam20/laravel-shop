@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\AdminsRole;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -250,10 +251,31 @@ class AdminController extends Controller
         $title = "Update Sub Admin Role/Permission";
 
         if ($request->isMethod("post")) {
-            dd($request->all());
+            $data = $request->all();
+
+            // Delete all earlier roles for Subadmin
+            AdminsRole::where('subadmin_id', $id)->delete();
+            // Add new roles for Subadmin
+            $cmsPagesView = $data['cms_pages']['view'] ?? 0;
+            $cmsPagesEdit = $data['cms_pages']['edit'] ?? 0;
+            $cmsPagesFull = $data['cms_pages']['full'] ?? 0;
+
+            $recordRole = new AdminsRole();
+            $recordRole->subadmin_id = $id;
+            $recordRole->module = 'cms_pages';
+            $recordRole->view_access = $cmsPagesView;
+            $recordRole->edit_access = $cmsPagesEdit;
+            $recordRole->full_access = $cmsPagesFull;
+
+            if ($recordRole->save()) {
+                $this->backWithMessage('success_message', 'Sub Admin Roles updated successfully.');
+            }
+
         }
 
-        return view('admin.subadmins.update_roles', compact('title', 'id'));
+        $subadminRoles = AdminsRole::where('subadmin_id', $id)->get()->toArray();
+
+        return view('admin.subadmins.update_roles', compact('title', 'id', 'subadminRoles'));
     }
 
     private function backWithMessage(string $message, string $title): RedirectResponse

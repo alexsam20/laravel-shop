@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('admins_roles', function (Blueprint $table) {
             $table->id();
-            $table->string('admin_id');
+            $table->integer('subadmin_id');
+            $table->string('module');
             $table->string('view_access');
             $table->string('edit_access');
             $table->string('full_access');
