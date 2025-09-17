@@ -248,32 +248,30 @@ class AdminController extends Controller
 
     public function updateRole($id, Request $request)
     {
-        $title = "Update Sub Admin Role/Permission";
-
         if ($request->isMethod("post")) {
             $data = $request->all();
 
             // Delete all earlier roles for Subadmin
             AdminsRole::where('subadmin_id', $id)->delete();
-            // Add new roles for Subadmin
-            $cmsPagesView = $data['cms_pages']['view'] ?? 0;
-            $cmsPagesEdit = $data['cms_pages']['edit'] ?? 0;
-            $cmsPagesFull = $data['cms_pages']['full'] ?? 0;
 
+            // Add new roles for Subadmin Dynamically
             $recordRole = new AdminsRole();
+            foreach ($data as $key => $value) {
+                $recordRole->view_access = $value['view'] ?? 0;
+                $recordRole->edit_access = $value['edit'] ?? 0;
+                $recordRole->full_access = $value['full'] ?? 0;
+            }
             $recordRole->subadmin_id = $id;
-            $recordRole->module = 'cms_pages';
-            $recordRole->view_access = $cmsPagesView;
-            $recordRole->edit_access = $cmsPagesEdit;
-            $recordRole->full_access = $cmsPagesFull;
+            $recordRole->module = $key;
 
             if ($recordRole->save()) {
                 $this->backWithMessage('success_message', 'Sub Admin Roles updated successfully.');
             }
-
         }
 
         $subadminRoles = AdminsRole::where('subadmin_id', $id)->get()->toArray();
+        $subadminDetails = Admin::where('id', $id)->first();
+        $title = "Update " . $subadminDetails->name . " Sub Admin Role/Permissions";
 
         return view('admin.subadmins.update_roles', compact('title', 'id', 'subadminRoles'));
     }
