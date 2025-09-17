@@ -86,6 +86,8 @@
                                                 <a href="{{ url('admin/add-edit-subadmin/' . $subadmin->id) }}" style="color: #3f6ed3;"><i class="fas fa-edit"></i></a>
                                                 &nbsp;
                                                 <a href="javascript:void(0)" record="subadmin" recordid="{{ $subadmin->id }}" <?php /*href="{{ url('admin/delete-cms-page/' . $page['id']) }}"*/ ?> class="confirmDelete" name="Subadmin" title="Delete Subadmin" style="color: #3f6ed3;"><i class="fas fa-trash"></i></a>
+                                                &nbsp;
+                                                <a href="{{ url('admin/update-role/' . $subadmin->id) }}" style="color: #3f6ed3;"><i class="fas fa-unlock"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
