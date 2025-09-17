@@ -182,26 +182,58 @@ class AdminController extends Controller
 
         if ($request->isMethod("post")) {
             $data = $request->all();
-            dd($data);
 
-            /*// CMS Pages Validations
+            if ($id == "") {
+                $subAdminCount = Admin::where('email', $data['email'])->count();
+                if ($subAdminCount > 0) {
+                    return $this->backWithMessage('error_message', 'Subadmin already exists.');
+                }
+            }
+
+            // Subadmin Validations
             $request->validate([
-                'title' => 'required|max:255',
-                'url' => 'required|max:255',
-                'description' => 'required',
+                'name' => 'required|regex:/^[\pL\s\-]+$/u|max:255',
+                'mobile' => 'required|numeric|digits:10',
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
 
-            $cmsPage->title = $data['title'];
-            $cmsPage->url = $data['url'];
-            $cmsPage->description = $data['description'];
-            $cmsPage->meta_title = $data['meta_title'];
-            $cmsPage->meta_description = $data['meta_description'];
-            $cmsPage->meta_keywords = $data['meta_keywords'];
-            $cmsPage->status = 1;
+            // Upload Admin Image
+            if ($request->hasFile('image')) {
+                $image_tmp = $request->file('image');
+                if ($image_tmp->isValid()) {
+                    // Get Image Extension
+                    $extension = $image_tmp->getClientOriginalExtension();
+                    // create image manager with desired driver
+                    $manager = new ImageManager(new Driver());
+                    // open an image file
+                    $image = $manager->read($image_tmp);
+                    // Generate New Image Name
+                    $imageName = rand(11111, 99999) . '.' . $extension;
+                    $imagePath = 'admin/img/photos/' . $imageName;
+                    $image->save($imagePath);
 
-            if ($cmsPage->save()) {
-                return redirect()->route('cms-pages')->with('success_message', $message);
-            }*/
+                }
+            } else if (!empty($data['current_image'])) {
+                $imageName = $data['current_image'];
+            } else {
+                $imageName = "";
+            }
+
+            $subAdminData->image = $imageName;
+            $subAdminData->name = $data['name'];
+            $subAdminData->mobile = $data['mobile'];
+            if ($id == "") {
+                $subAdminData->email = $data['email'];
+                $subAdminData->type = 'subadmin';
+            }
+            if ($data['password'] != "") {
+                $subAdminData->password = Hash::make($data['password']);
+            }
+            $subAdminData->status = 1;
+
+            if ($subAdminData->save()) {
+                return redirect('admin/subadmins')->with('success_message', $message);
+            }
         }
 
         return view('admin.subadmins.add_edit_subadmin', compact('title', 'subAdminData'));

@@ -49,6 +49,14 @@
                                         </ul>
                                     </div>
                                 @endif
+                                    @if(Session::has('error_message'))
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <strong>Error:</strong> {{ Session::get('error_message') }}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    @endif
                                 <!-- form start -->
                                 <form name="subadminForm"
                                       id="subadminForm"
@@ -64,39 +72,41 @@
                                             <label for="name">Name<span style="color: red">&nbsp;*</span></label>
                                             <input type="text" name="name" class="form-control" id="name"
                                                    placeholder="Enter Name"
-                                                   @if(!empty($subAdminData['name'])) value="{{ $subAdminData['name'] }}" @endif>
+                                                   @if(!empty($subAdminData['name'])) value="{{ $subAdminData['name'] }}" @else value="{{ old('name') }}" @endif>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email<span style="color: red">&nbsp;*</span></label>
+                                            <input type="email" name="email" class="form-control" id="email"
+                                                   placeholder="Enter Email"
+                                                   @if(!empty($subAdminData['email'])) value="{{ $subAdminData['email'] }}" @endif
+                                                   @if($subAdminData['id'] != "") disabled style="background-color: #1d455b" @else required @endif>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password">Password<span style="color: red">&nbsp;*</span></label>
+                                            <input type="password" name="password" class="form-control"
+                                                   id="password" placeholder="Enter Password">
+                                            {{--@if(!empty($subAdminData['password'])) value="{{ $subAdminData['password'] }}" @endif>--}}
                                         </div>
                                         <div class="form-group">
                                             <label for="mobile">Mobile<span style="color: red">&nbsp;*</span></label>
                                             <input type="text" name="mobile" class="form-control" id="mobile"
                                                    placeholder="Enter Mobile"
-                                                   @if(!empty($subAdminData['mobile'])) value="{{ $subAdminData['mobile'] }}" @endif>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Email</label>
-                                            <input type="email" name="email" class="form-control" id="email"
-                                                   placeholder="Enter Email"
-                                                   @if(!empty($subAdminData['email'])) value="{{ $subAdminData['email'] }}" @endif
-                                                   @if($subAdminData['id'] != "") disabled @else required @endif>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password">Password</label>
-                                            <input type="text" name="password" class="form-control"
-                                                   id="password" placeholder="Enter Password"
-                                                   @if(!empty($subAdminData['password'])) value="{{ $subAdminData['password'] }}" @endif>
+                                                   @if(!empty($subAdminData['mobile'])) value="{{ $subAdminData['mobile'] }}" @else value="{{ old('mobile') }}" @endif>
                                         </div>
                                         <div class="form-group">
                                             <label for="image">Photo</label>
                                             <input type="file" class="form-control" id="image" name="image">
                                             @if(!empty($subAdminData['image']))
+                                                <div style="float: right; margin-top: 10px;">
                                                 <a target="_blank" href="{{ url('admin/img/photos/' . $subAdminData['image']) }}">View Photo</a>
+                                                </div>
                                                 <input type="hidden" name="current_image" value="{{ $subAdminData['image'] }}">
                                             @endif
                                         </div>
                                     </div>
                                     <!-- /.card-body -->
 
-                                    <div class="form-group">
+                                    <div class="form-group" style="margin-top: -20px; margin-left: 20px;">
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
                                 </form>
@@ -107,7 +117,7 @@
                         <!-- /.row -->
                     </div>
                     <!-- /.card-body -->
-                    <div class="card-footer"></div>
+                    {{--<div class="card-footer"></div>--}}
                 </div>
                 <!-- /.card -->
             </div>

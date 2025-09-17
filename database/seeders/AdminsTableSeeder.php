@@ -16,7 +16,7 @@ class AdminsTableSeeder extends Seeder
     {
         $password = Hash::make('123456');
         $adminRecords = [
-            /*[
+            [
                 'id' => 1,
                 'name' => 'Admin',
                 'type' => 'admin',
@@ -27,7 +27,7 @@ class AdminsTableSeeder extends Seeder
                 'status' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],*/
+            ],
             [
                 'id' => 2,
                 'name' => 'Marshall',
