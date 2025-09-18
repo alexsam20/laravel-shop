@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CmsController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::match(['get', 'post'],'add-edit-subadmin/{id?}', [AdminController::class, 'addEditSubadmin'])->name('add-edit-subadmin');
         Route::get('delete-subadmin/{id?}', [AdminController::class, 'deleteSubadmin'])->name('delete-subadmin');
         Route::match(['get', 'post'],'update-role/{id}', [AdminController::class, 'updateRole'])->name('update-role');
+
+        // Categories
+        Route::get('categories', [CategoryController::class, 'categories'])->name('categories');
     });
 
 });
