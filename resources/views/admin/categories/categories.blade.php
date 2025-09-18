@@ -64,32 +64,32 @@
                                             <td>{{ $category['url'] }}</td>
                                             <td>{{ date("F j, Y, g:i a", strtotime($category['created_at'])) }}</td>
                                             <td style="text-align: center">
-                                                {{--@if($page['status'] === 1)
-                                                    <a class="updateCmsPageStatus"
-                                                       id="page-{{ $category['id'] }}"
-                                                       page_id="{{ $category['id'] }}"
+                                                @if($category['status'] === 1)
+                                                    <a class="updateCategoryStatus"
+                                                       id="category-{{ $category['id'] }}"
+                                                       category_id="{{ $category['id'] }}"
                                                        style="color: #3f6ed3"
                                                        href="javascript:void(0)">
                                                         <i class="fas fa-toggle-on" status="Active"></i>
                                                     </a>
                                                 @else
-                                                    <a class="updateCmsPageStatus"
-                                                       id="page-{{ $category['id'] }}"
-                                                       page_id="{{ $category['id'] }}"
+                                                    <a class="updateCategoryStatus"
+                                                       id="category-{{ $category['id'] }}"
+                                                       category_id="{{ $category['id'] }}"
                                                        style="color: grey"
                                                        href="javascript:void(0)">
                                                         <i class="fas fa-toggle-off" status="Inactive"></i>
                                                     </a>
                                                 @endif
                                                 &nbsp;
-                                                <a href="{{ url('admin/add-edit-cms-page/' . $category['id']) }}"
+                                                <a href="{{ url('admin/add-edit-category/' . $category['id']) }}"
                                                    style="color: #3f6ed3;"><i class="fas fa-edit"></i></a>
                                                 &nbsp;
-                                                <a href="javascript:void(0)" record="cms-page"
+                                                <a href="javascript:void(0)" record="category"
                                                    recordid="{{ $category['id'] }}"
-                                                   <?php /*href="{{ url('admin/delete-cms-page/' . $page['id']) }}"*/ ?> class="confirmDelete"
-                                                   name="CMS Page" title="Delete CMS Page"
-                                                   style="color: #3f6ed3;"><i class="fas fa-trash"></i></a>--}}
+                                                   <?php /*href="{{ url('admin/delete-cms-category/' . $category['id']) }}"*/ ?> class="confirmDelete"
+                                                   name="CMS category" title="Delete CMS category"
+                                                   style="color: #3f6ed3;"><i class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

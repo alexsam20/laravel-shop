@@ -33,6 +33,8 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         // Categories
         Route::get('categories', [CategoryController::class, 'categories'])->name('categories');
+        Route::post('update-category-status', [CategoryController::class, 'updateCategoryStatus'])->name('update-category-status');
+        Route::get('delete-category/{id?}', [CategoryController::class, 'deleteCategory'])->name('delete-category');
     });
 
 });

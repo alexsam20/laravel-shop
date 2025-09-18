@@ -45,6 +45,29 @@ $(document).ready(function () {
         });
     });
 
+    // Update Category Status
+    $(document).on("click", ".updateCategoryStatus", function () {
+        const status = $(this).children("i").attr("status");
+        const category_id = $(this).attr("category_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/admin/update-category-status",
+            data:{status: status, category_id: category_id},
+            success: function (resp) {
+                if (resp['status'] == 0){
+                    $("#category-"+category_id).html('<i class="fas fa-toggle-off" style="color: grey" status="Inactive"></i>');
+                }else if (resp['status'] == 1) {
+                    $("#category-"+category_id).html('<i class="fas fa-toggle-on" style="color: #3f6ed3" status="Active"></i>');
+                }
+            }, error: function () {
+                alert("Error");
+            }
+        });
+    });
+
     // Confirm the deletion of the CMS Page
     /*$(document).on("click", ".confirmDelete", function () {
         const name = $(this).attr("name");
