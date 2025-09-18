@@ -57,7 +57,7 @@
                                       @else
                                           action="{{ url('admin/add-edit-category/' . $category['id']) }}"
                                       @endif
-                                      method="post">
+                                      method="post" enctype="multipart/form-data">
                                     @csrf
                                     <div class="card-body">
                                         <div class="form-group">
