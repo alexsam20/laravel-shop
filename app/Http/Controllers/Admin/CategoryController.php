@@ -51,6 +51,12 @@ class CategoryController extends Controller
         if ($request->isMethod('post')) {
             $data = $request->all();
 
+            // CMS Pages Validations
+            $request->validate([
+                'category_name' => 'required|max:255',
+                'url' => 'required|max:255|unique:categories,url',
+            ]);
+
             // Upload Admin Image
             if ($request->hasFile('category_image')) {
                 $image_tmp = $request->file('category_image');

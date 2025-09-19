@@ -63,46 +63,46 @@
                                         <div class="form-group">
                                             <label for="category_name">Category Name<span style="color: red">&nbsp;*</span></label>
                                             <input type="text" name="category_name" class="form-control" id="category_name"
-                                                   placeholder="Enter Category Name"
+                                                   placeholder="Enter Category Name" value="{{ old('category_name') }}"
                                                    {{--@if(!empty($category['category_name'])) value="{{ $category['category_name'] }}" @endif--}}>
                                         </div>
                                         <div class="form-group">
-                                            <label for="category_image">Category Image<span style="color: red">&nbsp;*</span></label>
+                                            <label for="">Category URL<span style="color: red">&nbsp;*</span></label>
+                                            <input type="text" name="url" class="form-control" id="url"
+                                                   placeholder="Enter Category  URL" value="{{ old('url') }}"
+                                                   {{--@if(!empty($category['url'])) value="{{ $category['url'] }}" @endif--}}>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="category_image">Category Image</label>
                                             <input type="file" name="category_image" class="form-control" id="category_image">
                                         </div>
                                         <div class="form-group">
-                                            <label for="category_discount">Category Discount<span style="color: red">&nbsp;*</span></label>
+                                            <label for="category_discount">Category Discount</label>
                                             <input type="text" name="category_discount" class="form-control" id="category_discount"
-                                                   placeholder="Enter Category Discount"
+                                                   placeholder="Enter Category Discount" value="{{ old('category_discount') }}"
                                                 {{--@if(!empty($category['category_discount'])) value="{{ $category['category_discount'] }}" @endif--}}>
                                         </div>
                                         <div class="form-group">
-                                            <label for="url">Category URL<span style="color: red">&nbsp;*</span></label>
-                                            <input type="text" name="url" class="form-control" id="url"
-                                                   placeholder="Enter Category  URL"
-                                                   @if(!empty($category['url'])) value="{{ $category['url'] }}" @endif>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="description">Category Description<span style="color: red">&nbsp;*</span></label>
+                                            <label for="description">Category Description</label>
                                             <textarea name="description" class="form-control" rows="3" id="description"
-                                                      placeholder="Enter Category Description">{{--@if(!empty($category['description'])) {{ $category['description'] }} @endif--}}</textarea>
+                                                      placeholder="Enter Category Description">{{ old('description') }}{{--@if(!empty($category['description'])) {{ $category['description'] }} @endif--}}</textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="meta_title">Meta Title</label>
                                             <input type="text" name="meta_title" class="form-control" id="meta_title"
-                                                   placeholder="Enter Meta Title"
+                                                   placeholder="Enter Meta Title" value="{{ old('meta_title') }}"
                                                    {{--@if(!empty($category['meta_title'])) value="{{ $category['meta_title'] }}" @endif--}}>
                                         </div>
                                         <div class="form-group">
                                             <label for="meta_description">Meta Description</label>
                                             <input type="text" name="meta_description" class="form-control"
-                                                   id="meta_description" placeholder="Enter Meta Description"
+                                                   id="meta_description" placeholder="Enter Meta Description" value="{{ old('meta_description') }}"
                                                    {{--@if(!empty($category['meta_description'])) value="{{ $category['meta_description'] }}" @endif--}}>
                                         </div>
                                         <div class="form-group">
                                             <label for="meta_keywords">Meta Keywords</label>
                                             <input type="text" name="meta_keywords" class="form-control"
-                                                   id="meta_keywords" placeholder="Enter Meta Keywords"
+                                                   id="meta_keywords" placeholder="Enter Meta Keywords" value="{{ old('meta_keywords') }}"
                                                    {{--@if(!empty($category['meta_keywords'])) value="{{ $category['meta_keywords'] }}" @endif--}}>
                                         </div>
                                     </div>
