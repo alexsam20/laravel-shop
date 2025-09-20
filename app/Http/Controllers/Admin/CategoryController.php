@@ -38,6 +38,7 @@ class CategoryController extends Controller
 
     public function addEditCategory(Request $request, $id = null)
     {
+        $getCategories = Category::getCategories();
         if ($id == '') {
             // Add Category
             $title = "Add Category";
@@ -46,6 +47,8 @@ class CategoryController extends Controller
         } else {
             // Edit Category
             $title = "Edit Category";
+            $category = Category::find($id);
+            $message = "Category updated successfully.";
         }
 
         if ($request->isMethod('post')) {
@@ -80,6 +83,7 @@ class CategoryController extends Controller
             }
 
             $category->category_name = $data['category_name'];
+            $category->parent_id = $data['parent_id'];
             $category->category_discount = $data['category_discount'];
             $category->description = $data['description'];
             $category->url = $data['url'];
@@ -89,10 +93,10 @@ class CategoryController extends Controller
             $category->status = 1;
             $category->save();
 
-            return redirect('admin/categories')->with('success', $message);
+            return redirect('admin/categories')->with('success_message', $message);
         }
 
-        return view('admin.categories.add_edit_category', compact('title', 'id'));
+        return view('admin.categories.add_edit_category', compact('title', 'getCategories'));
     }
 
     public function deleteCategory($id)

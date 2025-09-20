@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('parent_id');
             $table->string('category_name');
             $table->string('category_image')->nullable();
-            $table->float('category_discount', 10, 2)->nullable();
+            $table->float('category_discount', 10, 2)->default(0);
             $table->string('description')->nullable();
             $table->string('url');
             $table->string('meta_title')->nullable();

@@ -67,6 +67,26 @@
                                                    {{--@if(!empty($category['category_name'])) value="{{ $category['category_name'] }}" @endif--}}>
                                         </div>
                                         <div class="form-group">
+                                            <label for="category_name">Category Level<span style="color: red">&nbsp;*</span></label>
+                                            <select name="parent_id" class="form-control">
+                                                <option value="" disabled>Select</option>
+                                                <option value="0">Main Category</option>
+                                                @foreach($getCategories as $category)
+                                                    <option value="{{ $category['id'] }}">{{ $category['category_name'] }}</option>
+                                                    @if(!empty($category['sub_categories']))
+                                                        @foreach($category['sub_categories'] as $sub_category)
+                                                            <option value="{{ $sub_category['id'] }}">&nbsp;&nbsp;&raquo;&nbsp;{{ $sub_category['category_name'] }}</option>
+                                                            @if(!empty($sub_category['sub_categories']))
+                                                                @foreach($sub_category['sub_categories'] as $subcategory)
+                                                                    <option value="{{ $subcategory['id'] }}">&nbsp;&nbsp;&nbsp;&nbsp;&raquo;&raquo;&nbsp;{{ $subcategory['category_name'] }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                      </div>
+                                        <div class="form-group">
                                             <label for="">Category URL<span style="color: red">&nbsp;*</span></label>
                                             <input type="text" name="url" class="form-control" id="url"
                                                    placeholder="Enter Category  URL" value="{{ old('url') }}"
