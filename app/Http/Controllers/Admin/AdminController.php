@@ -109,26 +109,7 @@ class AdminController extends Controller
             ]);
 
             // Upload Admin Image
-            if ($request->hasFile('admin_image')) {
-                $image_tmp = $request->file('admin_image');
-                if ($image_tmp->isValid()) {
-                    // Get Image Extension
-                    $extension = $image_tmp->getClientOriginalExtension();
-                    // create image manager with desired driver
-                    $manager = new ImageManager(new Driver());
-                    // open an image file
-                    $image = $manager->read($image_tmp);
-                    // Generate New Image Name
-                    $imageName = rand(11111, 99999) . '.' . $extension;
-                    $imagePath = 'admin/img/photos/' . $imageName;
-                    $image->save($imagePath);
-
-                }
-            } else if (!empty($data['current_image'])) {
-                $imageName = $data['current_image'];
-            } else {
-                $imageName = "";
-            }
+            $imageName = $this->updateImage($request, 'admin_image', 'admin/img/photos/');
 
             // Update Admin Details
             Admin::where('email', $this->getGuardUser()->email)

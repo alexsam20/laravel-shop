@@ -61,26 +61,7 @@ class CategoryController extends Controller
             ]);
 
             // Upload Admin Image
-            if ($request->hasFile('category_image')) {
-                $image_tmp = $request->file('category_image');
-                if ($image_tmp->isValid()) {
-                    // Get Image Extension
-                    $extension = $image_tmp->getClientOriginalExtension();
-                    // create image manager with desired driver
-                    $manager = new ImageManager(new Driver());
-                    // open an image file
-                    $image = $manager->read($image_tmp);
-                    // Generate New Image Name
-                    $imageName = rand(11111, 99999) . '.' . $extension;
-                    $imagePath = 'front/img/categories/' . $imageName;
-                    // Upload the category Image
-                    $image->save($imagePath);
-                    $category->category_image = $imageName;
-
-                }
-            } else {
-                $category->category_image = "";
-            }
+            $category->category_image = $this->updateImage($request, 'category_image', 'front/img/categories/');
 
             $category->category_name = $data['category_name'];
             $category->parent_id = $data['parent_id'];
