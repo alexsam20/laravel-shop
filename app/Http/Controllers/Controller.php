@@ -8,7 +8,7 @@ use Intervention\Image\ImageManager;
 
 abstract class Controller
 {
-    protected function updateImage(Request $request, string $tag = '', string $path = '')
+    protected function updateImage(Request $request, string $tag = '', string $path = '', $data)
     {
         // Upload Image
         if ($request->hasFile($tag)) {

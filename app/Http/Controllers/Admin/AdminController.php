@@ -109,7 +109,7 @@ class AdminController extends Controller
             ]);
 
             // Upload Admin Image
-            $imageName = $this->updateImage($request, 'admin_image', 'admin/img/photos/');
+            $imageName = $this->updateImage($request, 'admin_image', 'admin/img/photos/', $data);
 
             // Update Admin Details
             Admin::where('email', $this->getGuardUser()->email)

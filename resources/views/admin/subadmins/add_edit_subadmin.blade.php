@@ -85,7 +85,6 @@
                                             <label for="password">Password<span style="color: red">&nbsp;*</span></label>
                                             <input type="password" name="password" class="form-control"
                                                    id="password" placeholder="Enter Password">
-                                            {{--@if(!empty($subAdminData['password'])) value="{{ $subAdminData['password'] }}" @endif>--}}
                                         </div>
                                         <div class="form-group">
                                             <label for="mobile">Mobile<span style="color: red">&nbsp;*</span></label>

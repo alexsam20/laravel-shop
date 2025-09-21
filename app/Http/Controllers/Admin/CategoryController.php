@@ -55,13 +55,20 @@ class CategoryController extends Controller
             $data = $request->all();
 
             // CMS Pages Validations
-            $request->validate([
-                'category_name' => 'required|max:255',
-                'url' => 'required|max:255|unique:categories,url',
-            ]);
+            if ($id == '') {
+                $request->validate([
+                    'category_name' => 'required|max:255',
+                    'url' => 'required|max:255|unique:categories',
+                ]);
+            } else {
+                $request->validate([
+                    'category_name' => 'required|max:255',
+                    'url' => 'required|max:255',
+                ]);
+            }
 
             // Upload Admin Image
-            $category->category_image = $this->updateImage($request, 'category_image', 'front/img/categories/');
+            $category->category_image = $this->updateImage($request, 'category_image', 'front/img/categories/', $data);
 
             $category->category_name = $data['category_name'];
             $category->parent_id = $data['parent_id'];
@@ -77,7 +84,7 @@ class CategoryController extends Controller
             return redirect('admin/categories')->with('success_message', $message);
         }
 
-        return view('admin.categories.add_edit_category', compact('title', 'getCategories'));
+        return view('admin.categories.add_edit_category', compact('title', 'getCategories', 'category'));
     }
 
     public function deleteCategory($id)
