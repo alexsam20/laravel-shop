@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminsRole;
 use App\Models\Category;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -10,16 +11,33 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
-    public function categories(): Factory|View
+    public function categories()
     {
         Session::put('page', 'categories');
         $categories = Category::with('parentCategory')->get();
 
-        return view('admin.categories.categories', compact('categories'));
+        // Set Admin/Sab Admins Permissions for Categories
+        $categoriesModuleCount = AdminsRole::where(['subadmin_id' => Auth::guard('admin')->user()->id, 'module' => 'categories'])->count();
+        $categoriesModule = [];
+        if (Auth::guard('admin')->user()->type == 'admin') {
+            $categoriesModule['view_access'] = 1;
+            $categoriesModule['edit_access'] = 1;
+            $categoriesModule['full_access'] = 1;
+        } else if ($categoriesModuleCount == 0) {
+            $message = "This feature is restricted for you";
+            return redirect('admin/dashboard')->with('error_message', $message);
+        } else {
+            $categoriesModule = AdminsRole::where(['subadmin_id' => Auth::guard('admin')->user()->id, 'module' => 'categories'])
+                ->first()
+                ->toArray();
+        }
+
+        return view('admin.categories.categories', compact('categories', 'categoriesModule'));
     }
 
     public function updateCategoryStatus(Request $request): JsonResponse

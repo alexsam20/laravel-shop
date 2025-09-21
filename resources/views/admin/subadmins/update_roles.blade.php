@@ -73,7 +73,7 @@
                             @if(!empty($subadminRoles))
                                 @foreach($subadminRoles as $role)
                                     @if($role['module'] == 'cms_pages')
-                                        @if($role['view_access'] == 1)
+                                        {{--@if($role['view_access'] == 1)
                                             @php $viewCMSPages = 'checked' @endphp
                                         @else
                                             @php $viewCMSPages = '' @endphp
@@ -87,16 +87,30 @@
                                             @php $fullCMSPages = 'checked' @endphp
                                         @else
                                             @php $fullCMSPages = '' @endphp
-                                        @endif
+                                        @endif--}}
+                                        @php $viewCMSPages = ($role['view_access'] == 1) ? 'checked' : ''; @endphp
+                                        @php $editCMSPages = ($role['edit_access'] == 1) ? 'checked' : ''; @endphp
+                                        @php $fullCMSPages = ($role['full_access'] == 1) ? 'checked' : ''; @endphp
+                                    @endif
+                                    @if($role['module'] == 'categories')
+                                        @php $viewCategories = ($role['view_access'] == 1) ? 'checked' : ''; @endphp
+                                        @php $editCategories = ($role['edit_access'] == 1) ? 'checked' : ''; @endphp
+                                        @php $fullCategories = ($role['full_access'] == 1) ? 'checked' : ''; @endphp
                                     @endif
                                 @endforeach
                             @endif
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="cms_pages">CMS Pages:&nbsp;&nbsp;&nbsp;</label>
+                                    <label style="width: 130px;" for="cms_pages">CMS Pages:</label>
                                     <input type="checkbox" name="cms_pages[view]" value="1" @if(isset($viewCMSPages)) {{ $viewCMSPages }} @endif>&nbsp;View Access &nbsp;&nbsp;
                                     <input type="checkbox" name="cms_pages[edit]" value="1" @if(isset($editCMSPages)) {{ $editCMSPages }} @endif>&nbsp;View/Edit Access &nbsp;&nbsp;
                                     <input type="checkbox" name="cms_pages[full]" value="1" @if(isset($fullCMSPages)) {{ $fullCMSPages }} @endif>&nbsp;Full Access &nbsp;&nbsp;
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 130px;" for="cms_pages">Categories:</label>
+                                    <input type="checkbox" name="categories[view]" value="1" @if(isset($viewCategories)) {{ $viewCategories }} @endif>&nbsp;View Access &nbsp;&nbsp;
+                                    <input type="checkbox" name="categories[edit]" value="1" @if(isset($editCategories)) {{ $editCategories }} @endif>&nbsp;View/Edit Access &nbsp;&nbsp;
+                                    <input type="checkbox" name="categories[full]" value="1" @if(isset($fullCategories)) {{ $fullCategories }} @endif>&nbsp;Full Access &nbsp;&nbsp;
                                 </div>
                             </div>
                             <!-- /.card-body -->

@@ -84,18 +84,14 @@
                                                             <i class="fas fa-toggle-off" status="Inactive"></i>
                                                         </a>
                                                     @endif
-                                                {{--@endif--}}
                                                 &nbsp;
-                                                {{--@if((isset($pagesModule['edit_access']) && $pagesModule['edit_access'] == 1) ||
-                                                    (isset($pagesModule['full_access']) && $pagesModule['full_access'] == 1))--}}
                                                     <a href="{{ url('admin/add-edit-cms-page/' . $page['id']) }}"
                                                        style="color: #3f6ed3;"><i class="fas fa-edit"></i></a>
                                                 @endif
                                                 &nbsp;
                                                 @if(isset($pagesModule['full_access']) && $pagesModule['full_access'] == 1)
                                                     <a href="javascript:void(0)" record="cms-page"
-                                                       recordid="{{ $page['id'] }}"
-                                                       <?php /*href="{{ url('admin/delete-cms-page/' . $page['id']) }}"*/ ?> class="confirmDelete"
+                                                       recordid="{{ $page['id'] }}" class="confirmDelete"
                                                        name="CMS Page" title="Delete CMS Page"
                                                        style="color: #3f6ed3;"><i class="fas fa-trash"></i></a>
                                                 @endif
