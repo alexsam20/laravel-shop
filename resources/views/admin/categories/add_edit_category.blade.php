@@ -94,16 +94,21 @@
                                             <input type="text" name="url" class="form-control" id="url"
                                                    placeholder="Enter Category  URL"
                                                    @if(!empty($category['url'])) value="{{ $category['url'] }}" @else value="{{ old('url') }}" @endif>
+                                            @if(!empty($category['category_image']))
+                                                <div style="float: right; margin: 10px 0; padding: 8px; border: 1px solid gray">
+                                                    <a target="_blank" href="{{ url('front/img/categories/' . $category['category_image']) }}"><img style="width: 50px" src="{{ asset('front/img/categories/' . $category['category_image']) }}"></a>&nbsp;
+                                                    <a href="javascript:void(0)" record="category-image"
+                                                       recordid="{{ $category['id'] }}"
+                                                       class="confirmDelete"
+                                                       title="Delete Category Image"
+                                                       style="color: #3f6ed3;"><!--Delete-->&nbsp;<i class="fas fa-trash" style="color: #BD362F"></i></a>
+                                                </div>
+                                                <input type="hidden" name="current_image" value="{{ $category['category_image'] }}">
+                                            @endif
                                         </div>
                                         <div class="form-group">
                                             <label for="category_image">Category Image</label>
                                             <input type="file" name="category_image" class="form-control" id="category_image">
-                                            @if(!empty($category['category_image']))
-                                                <div style="float: right; margin-top: 10px;">
-                                                    <a target="_blank" href="{{ url('front/img/categories/' . $category['category_image']) }}">View Image</a>
-                                                </div>
-                                                <input type="hidden" name="current_image" value="{{ $category['category_image'] }}">
-                                            @endif
                                         </div>
                                         <div class="form-group">
                                             <label for="category_discount">Category Discount</label>
