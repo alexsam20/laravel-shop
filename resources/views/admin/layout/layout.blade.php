@@ -81,6 +81,7 @@
         $("#cmspages").DataTable();
         $("#subadmins").DataTable();
         $("#categories").DataTable();
+        $("#products").DataTable();
     });
 </script>
 <!-- Select2 -->

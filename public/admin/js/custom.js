@@ -123,4 +123,27 @@ $(document).ready(function () {
         });
     });
 
+    // Update Product Status
+    $(document).on("click", ".updateProductStatus", function () {
+        const status = $(this).children("i").attr("status");
+        const product_id = $(this).attr("product_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/admin/update-product-status",
+            data:{status: status, product_id: product_id},
+            success: function (resp) {
+                if (resp['status'] == 0){
+                    $("#product-"+product_id).html('<i class="fas fa-toggle-off" style="color: grey" status="Inactive"></i>');
+                }else if (resp['status'] == 1) {
+                    $("#product-"+product_id).html('<i class="fas fa-toggle-on" style="color: #3f6ed3" status="Active"></i>');
+                }
+            }, error: function () {
+                alert("Error");
+            }
+        });
+    });
+
 });
