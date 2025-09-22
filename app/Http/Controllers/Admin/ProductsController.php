@@ -11,7 +11,8 @@ class ProductsController extends Controller
 {
     public function products()
     {
-        $products = Product::get()->toArray();
+        $products = Product::with('category')->get()->toArray();
+//        dd($products);
 
         return view('admin.products.products', compact('products'));
     }

@@ -54,7 +54,9 @@
                                         <th>Product Name</th>
                                         <th>Product Code</th>
                                         <th>Product Color</th>
-                                        <th>Created At</th>
+                                        <th>Category</th>
+                                        <th>Parent Category</th>
+                                        {{--<th>Created At</th>--}}
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
@@ -65,7 +67,13 @@
                                             <td>{{ $product['product_name'] }}</td>
                                             <td>{{ $product['product_code'] }}</td>
                                             <td>{{ $product['product_color'] }}</td>
-                                            <td>{{ date("F j, Y, g:i a", strtotime($product['created_at'])) }}</td>
+                                            <td>{{ $product['category']['category_name'] }}</td>
+                                            <td>
+                                                @if($product['category']['parent_category']['category_name'])
+                                                    {{ $product['category']['parent_category']['category_name'] }}
+                                                @endif
+                                            </td>
+                                            {{--<td>{{ date("F j, Y, g:i a", strtotime($product['created_at'])) }}</td>--}}
                                             <td style="text-align: center">
                                                 {{--@if((isset($productsModule['edit_access']) && $productsModule['edit_access'] == 1) ||
                                                     (isset($productsModule['full_access']) && $productsModule['full_access'] == 1))--}}
