@@ -16,4 +16,15 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class, 'category_id', 'id')->with('parentCategory');
     }
+
+    public static function productsFilters(): array
+    {
+        $productsFilters['fabricArray'] = ['Cotton', 'Polyester', 'Wool',];
+        $productsFilters['sleeveArray'] = ['Full Sleeve', 'Half Sleeve', 'Short Sleeve', 'Sleeveless',];
+        $productsFilters['patternArray'] = ['Checked', 'Plain', 'Printed', 'Self', 'Solid',];
+        $productsFilters['fitArray'] = ['Regular', 'Slim',];
+        $productsFilters['occasionArray'] = ['Causal', 'Formal',];
+
+        return $productsFilters;
+    }
 }
