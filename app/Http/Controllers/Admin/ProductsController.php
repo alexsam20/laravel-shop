@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -31,6 +32,20 @@ class ProductsController extends Controller
         Product::where('id', $data['product_id'])->update(['status' => $status]);
 
         return response()->json(['status' => $status, 'product_id' => $data['product_id']]);
+    }
+
+    public function addEditProduct($id = null)
+    {
+        if ($id == null) {
+            // Add Product
+            $title = "Add Product";
+        } else {
+            // Edit Product
+            $title = "Edit Product";
+        }
+        $getCategories = Category::getCategories();
+
+        return view('admin.products.add_edit_product', compact('title', 'getCategories'));
     }
 
     public function deleteProduct($id)

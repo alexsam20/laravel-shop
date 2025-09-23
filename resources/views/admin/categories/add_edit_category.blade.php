@@ -68,7 +68,7 @@
                                                    @if(!empty($category['category_name'])) value="{{ $category['category_name'] }}" @else value="{{ old('category_name') }}" @endif >
                                         </div>
                                         <div class="form-group">
-                                            <label for="category_name">Category Level (Parent Category)<span style="color: red">&nbsp;*</span></label>
+                                            <label for="category_level">Category Level (Parent Category)<span style="color: red">&nbsp;*</span></label>
                                             <select name="parent_id" class="form-control">
                                                 <option value="" disabled>Select</option>
                                                 <option value="0" @if($category['parent_id'] == 0) selected @endif>Main Category</option>

@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('product_video')->nullable();
             $table->text('description')->nullable();
             $table->text('wash_care')->nullable();
-            $table->text('keywords')->nullable();
+            $table->text('search_keywords')->nullable();
             $table->string('fabric')->nullable();
             $table->string('pattern')->nullable();
             $table->string('sleeve')->nullable();
