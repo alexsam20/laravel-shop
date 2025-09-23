@@ -82,25 +82,25 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="product_name">Product Name</label>
+                                            <label for="product_name">Product Name<span style="color: red">&nbsp;*</span></label>
                                             <input type="text" name="product_name" class="form-control" id="product_name"
                                                    placeholder="Enter Product Name"
                                                    {{--@if(!empty($product['product_name'])) value="{{ $product['product_name'] }}" @else value="{{ old('product_name') }}" @endif--}}>
                                         </div>
                                         <div class="form-group">
-                                            <label for="product_code">Product Code</label>
+                                            <label for="product_code">Product Code<span style="color: red">&nbsp;*</span></label>
                                             <input type="text" name="product_code" class="form-control" id="product_code"
                                                    placeholder="Enter Product Code"
                                                    {{--@if(!empty($product['product_code'])) value="{{ $product['product_code'] }}" @else value="{{ old('product_code') }}" @endif--}}>
                                         </div>
                                         <div class="form-group">
-                                            <label for="product_color">Product Color</label>
+                                            <label for="product_color">Product Color<span style="color: red">&nbsp;*</span></label>
                                             <input type="text" name="product_color" class="form-control" id="product_color"
                                                    placeholder="Enter Product Color"
                                                    {{--@if(!empty($product['product_color'])) value="{{ $product['product_color'] }}" @else value="{{ old('product_color') }}" @endif--}}>
                                         </div>
                                         <div class="form-group">
-                                            <label for="family_color">Family Color</label>
+                                            <label for="family_color">Family Color<span style="color: red">&nbsp;*</span></label>
                                             <select name="family_color" class="form-control">
                                                 <option value="">Select</option>
                                                 <option value="Red">Red</option>
@@ -122,7 +122,7 @@
                                                    {{--@if(!empty($product['group_code'])) value="{{ $product['group_code'] }}" @else value="{{ old('group_code') }}" @endif--}}>
                                         </div>
                                         <div class="form-group">
-                                            <label for="product_price">Product Price</label>
+                                            <label for="product_price">Product Price<span style="color: red">&nbsp;*</span></label>
                                             <input type="text" name="product_price" class="form-control" id="product_price"
                                                    placeholder="Enter Product Price"
                                                    {{--@if(!empty($product['product_price'])) value="{{ $product['product_price'] }}" @else value="{{ old('product_price') }}" @endif--}}>

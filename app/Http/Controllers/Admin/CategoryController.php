@@ -87,8 +87,8 @@ class CategoryController extends Controller
                 ]);
             }
 
-            // Upload Admin Image
-            $category->category_image = $this->updateImage($request, 'category_image', 'front/img/categories/', $data);
+            // Upload Category Image
+            $category->category_id = $this->updateImage($request, 'category_id', 'front/img/products/', $data);
 
             $category->category_name = $data['category_name'];
             $category->parent_id = $data['parent_id'];
