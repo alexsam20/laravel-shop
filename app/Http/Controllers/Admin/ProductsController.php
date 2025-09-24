@@ -54,8 +54,8 @@ class ProductsController extends Controller
                 'category_id' => 'required|max:255',
                 'product_name' => 'required|regex:/^[\pL\s\-]+$/u|max:200',
                 'product_code' => 'required|regex:/^[\w-]*$/|max:20',
-                'product_color' => 'required|regex:/^[\pL\s\-]+$/u|max:200',
-                'family_color' => 'required|regex:/^[\pL\s\-]+$/u|max:200',
+                'product_color' => 'required|regex:/^[\pL\s\-]+$/u|max:50',
+                'family_color' => 'required|regex:/^[\pL\s\-]+$/u|max:50',
                 'product_price' => 'required|numeric',
             ]);
 
@@ -78,7 +78,7 @@ class ProductsController extends Controller
                 $video_tmp = $request->file('product_video');
                 if ($video_tmp->isValid()) {
                     $videoNameFromSave = time() . '-' . $video_tmp->getClientOriginalName();
-                    $video_tmp->move('front/video/', $videoNameFromSave);
+                    $video_tmp->move('front/video/products/', $videoNameFromSave);
                     // Save Video Name in Product Table
                     $product->product_video = $videoNameFromSave;
                 }
@@ -140,5 +140,19 @@ class ProductsController extends Controller
     {
         Product::where('id', $id)->delete();
         return redirect()->back()->with('success_message', 'Product deleted successfully.');
+    }
+
+    public function deleteProductVideo($id)
+    {
+        $productVideo = Product::select('product_video')->where('id', $id)->first();
+        $file = 'front/video/products/' . $productVideo->product_video;
+
+        if (file_exists($file)) {
+            unlink($file);
+        }
+
+        Product::where('id', $id)->update(['product_video' => null]);
+
+        return redirect()->back()->with('success_message', 'Product Video has been deleted successfully.');
     }
 }

@@ -43,6 +43,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('products', [ProductsController::class, 'products'])->name('products');
         Route::post('update-product-status', [ProductsController::class, 'updateProductStatus'])->name('update-product-status');
         Route::get('delete-product/{id?}', [ProductsController::class, 'deleteProduct'])->name('delete-product');
+        Route::get('delete-product-video/{id?}', [ProductsController::class, 'deleteProductVideo'])->name('delete-product-video');
         Route::match(['get','post'], 'add-edit-product/{id?}', [ProductsController::class, 'addEditProduct'] )->name('add-edit-product');
     });
 

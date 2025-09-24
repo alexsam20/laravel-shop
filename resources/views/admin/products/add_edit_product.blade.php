@@ -49,6 +49,14 @@
                                         </ul>
                                     </div>
                                 @endif
+                                @if(Session::has('success_message'))
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>Success:</strong> {{ Session::get('success_message') }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
                                 <!-- form start -->
                                 <form name="productForm"
                                       id="productForm"
@@ -236,9 +244,20 @@
                                                    value="<?php echo $product['product_weight'] ?? old('product_weight') ?>">
                                         </div>
                                         <div class="form-group">
-                                            <label for="product_video">Product Video</label>
+                                            <label for="product_video">Product Video (Recommend Size: Less then 2MB)</label>
                                             <input type="file" name="product_video" class="form-control"
                                                    id="product_video">
+                                            <div style="float: right; margin-top: 10px;">
+                                            @if(!empty($product['product_video']))
+                                                <a target="_blank" href="{{ url('front/video/products/' . $product['product_video']) }}">View Video</a>&nbsp;&nbsp;|&nbsp;
+                                                <a href="javascript:void(0)" record="product-video"
+                                                   recordid="{{ $product['id'] }}"
+                                                   class="confirmDelete"
+                                                   title="Delete Product Video"
+                                                   style="color: #BD362F;"><i class="fas fa-trash"></i></a>
+
+                                            @endif
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="fabric">Fabric</label>

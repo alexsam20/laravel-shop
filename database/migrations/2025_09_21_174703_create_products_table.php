@@ -24,7 +24,7 @@ return new class extends Migration
             $table->float('product_discount')->default(0);
             $table->string('discount_type')->nullable();
             $table->float('final_price');
-            $table->string('product_video')->nullable();
+            $table->string('products')->nullable();
             $table->text('description')->nullable();
             $table->text('wash_care')->nullable();
             $table->text('search_keywords')->nullable();
