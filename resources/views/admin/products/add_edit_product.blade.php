@@ -61,17 +61,34 @@
                                     @csrf
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for="category_id">Select Category<span style="color: red">&nbsp;*</span></label>
+                                            <label for="category_id">Select Category<span
+                                                    style="color: red">&nbsp;*</span></label>
                                             <select name="category_id" class="form-control">
                                                 <option value="">Select</option>
                                                 @foreach($getCategories as $main_category)
-                                                    <option @if(!empty(@old('category_id')) && $main_category['id'] == @old('category_id')) selected @endif value="{{ $main_category['id'] }}">{{ $main_category['category_name'] }}</option>
+                                                    <option
+                                                        @if(!empty(@old('category_id')) && $main_category['id'] == @old('category_id'))
+                                                            selected
+                                                        @elseif(!empty($product['category_id']) && $product['category_id'] == $main_category['id'])
+                                                            selected
+                                                        @endif
+                                                        value="{{ $main_category['id'] }}">{{ $main_category['category_name'] }}</option>
                                                     @if(!empty($main_category['sub_categories']))
                                                         @foreach($main_category['sub_categories'] as $sub_category)
-                                                            <option @if(!empty(@old('category_id')) && $sub_category['id'] == @old('category_id')) selected @endif value="{{ $sub_category['id'] }}">&nbsp;&nbsp;&raquo;&nbsp;{{ $sub_category['category_name'] }}</option>
+                                                            <option
+                                                                @if(!empty(@old('category_id')) && $sub_category['id'] == @old('category_id'))
+                                                                    selected
+                                                                @elseif(!empty($product['category_id']) && $product['category_id'] == $sub_category['id'])
+                                                                    selected
+                                                                @endif value="{{ $sub_category['id'] }}">&nbsp;&nbsp;&raquo;&nbsp;{{ $sub_category['category_name'] }}</option>
                                                             @if(!empty($sub_category['sub_categories']))
                                                                 @foreach($sub_category['sub_categories'] as $subcategory)
-                                                                    <option @if(!empty(@old('category_id')) && $subcategory['id'] == @old('category_id')) selected @endif value="{{ $subcategory['id'] }}">&nbsp;&nbsp;&nbsp;&nbsp;&raquo;&raquo;&nbsp;{{ $subcategory['category_name'] }}</option>
+                                                                    <option
+                                                                        @if(!empty(@old('category_id')) && $subcategory['id'] == @old('category_id'))
+                                                                            selected
+                                                                        @elseif(!empty($product['category_id']) && $product['category_id'] == $subcategory['id'])
+                                                                            selected
+                                                                        @endif value="{{ $subcategory['id'] }}">&nbsp;&nbsp;&nbsp;&nbsp;&raquo;&raquo;&nbsp;{{ $subcategory['category_name'] }}</option>
                                                                 @endforeach
                                                             @endif
                                                         @endforeach
@@ -80,73 +97,161 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="product_name">Product Name<span style="color: red">&nbsp;*</span></label>
-                                            <input type="text" name="product_name" class="form-control" id="product_name"
+                                            <label for="product_name">Product Name<span
+                                                    style="color: red">&nbsp;*</span></label>
+                                            <input type="text" name="product_name" class="form-control"
+                                                   id="product_name"
                                                    placeholder="Enter Product Name"
-                                                   @if(!empty($product['product_name'])) value="{{ $product['product_name'] }}" @else value="{{ old('product_name') }}" @endif>
+                                                   value="<?php echo $product['product_name'] ?? old('product_name') ?>">
                                         </div>
                                         <div class="form-group">
-                                            <label for="product_code">Product Code<span style="color: red">&nbsp;*</span></label>
-                                            <input type="text" name="product_code" class="form-control" id="product_code"
+                                            <label for="product_code">Product Code<span
+                                                    style="color: red">&nbsp;*</span></label>
+                                            <input type="text" name="product_code" class="form-control"
+                                                   id="product_code"
                                                    placeholder="Enter Product Code"
-                                                   @if(!empty($product['product_code'])) value="{{ $product['product_code'] }}" @else value="{{ old('product_code') }}" @endif>
+                                                   value="<?php echo $product['product_code'] ?? old('product_code') ?>">
                                         </div>
                                         <div class="form-group">
-                                            <label for="product_color">Product Color<span style="color: red">&nbsp;*</span></label>
-                                            <input type="text" name="product_color" class="form-control" id="product_color"
+                                            <label for="product_color">Product Color<span
+                                                    style="color: red">&nbsp;*</span></label>
+                                            <input type="text" name="product_color" class="form-control"
+                                                   id="product_color"
                                                    placeholder="Enter Product Color"
-                                                   @if(!empty($product['product_color'])) value="{{ $product['product_color'] }}" @else value="{{ old('product_color') }}" @endif>
+                                                   value="<?php echo $product['product_color'] ?? old('product_color') ?>">
                                         </div>
                                         <div class="form-group">
-                                            <label for="family_color">Family Color<span style="color: red">&nbsp;*</span></label>
+                                            <label for="family_color">Family Color<span
+                                                    style="color: red">&nbsp;*</span></label>
                                             <select name="family_color" class="form-control">
                                                 <option value="">Select</option>
-                                                <option value="Red" @if(!empty(@old('family_color')) && @old('family_color') == 'Red') selected @endif>Red</option>
-                                                <option value="Green" @if(!empty(@old('family_color')) && @old('family_color') == 'Green') selected @endif>Green</option>
-                                                <option value="Yellow" @if(!empty(@old('family_color')) && @old('family_color') == 'Yellow') selected @endif>Yellow</option>
-                                                <option value="Black" @if(!empty(@old('family_color')) && @old('family_color') == 'Black') selected @endif>Black</option>
-                                                <option value="White" @if(!empty(@old('family_color')) && @old('family_color') == 'White') selected @endif>White</option>
-                                                <option value="Blue" @if(!empty(@old('family_color')) && @old('family_color') == 'Blue') selected @endif>Blue</option>
-                                                <option value="Orange" @if(!empty(@old('family_color')) && @old('family_color') == 'Orange') selected @endif>Orange</option>
-                                                <option value="Gray" @if(!empty(@old('family_color')) && @old('family_color') == 'Gray') selected @endif>Gray</option>
-                                                <option value="Silver" @if(!empty(@old('family_color')) && @old('family_color') == 'Silver') selected @endif>Silver</option>
-                                                <option value="Golden" @if(!empty(@old('family_color')) && @old('family_color') == 'Golden') selected @endif>Golden</option>
+                                                <option value="Red"
+                                                    @if(!empty(@old('family_color')) && @old('family_color') == 'Red')
+                                                        selected
+                                                    @elseif(!empty($product['family_color']) && $product['family_color'] == 'Red')
+                                                        selected
+                                                    @endif>
+                                                    Red
+                                                </option>
+                                                <option value="Green"
+                                                    @if(!empty(@old('family_color')) && @old('family_color') == 'Green')
+                                                        selected
+                                                    @elseif(!empty($product['family_color']) && $product['family_color'] == 'Green')
+                                                        selected
+                                                    @endif>
+                                                    Green
+                                                </option>
+                                                <option value="Yellow"
+                                                    @if(!empty(@old('family_color')) && @old('family_color') == 'Yellow')
+                                                        selected
+                                                    @elseif(!empty($product['family_color']) && $product['family_color'] == 'Yellow')
+                                                        selected
+                                                    @endif>
+                                                    Yellow
+                                                </option>
+                                                <option value="Black"
+                                                    @if(!empty(@old('family_color')) && @old('family_color') == 'Black')
+                                                        selected
+                                                    @elseif(!empty($product['family_color']) && $product['family_color'] == 'Black')
+                                                        selected
+                                                    @endif>
+                                                    Black
+                                                </option>
+                                                <option value="White"
+                                                    @if(!empty(@old('family_color')) && @old('family_color') == 'White')
+                                                        selected
+                                                    @elseif(!empty($product['family_color']) && $product['family_color'] == 'White')
+                                                        selected
+                                                    @endif>
+                                                    White
+                                                </option>
+                                                <option value="Blue"
+                                                    @if(!empty(@old('family_color')) && @old('family_color') == 'Blue')
+                                                        selected
+                                                    @elseif(!empty($product['family_color']) && $product['family_color'] == 'Blue')
+                                                        selected
+                                                    @endif>
+                                                    Blue
+                                                </option>
+                                                <option value="Orange"
+                                                    @if(!empty(@old('family_color')) && @old('family_color') == 'Orange')
+                                                        selected
+                                                    @elseif(!empty($product['family_color']) && $product['family_color'] == 'Orange')
+                                                        selected
+                                                    @endif>
+                                                    Orange
+                                                </option>
+                                                <option value="Gray"
+                                                    @if(!empty(@old('family_color')) && @old('family_color') == 'Gray')
+                                                        selected
+                                                    @elseif(!empty($product['family_color']) && $product['family_color'] == 'Gray')
+                                                        selected
+                                                    @endif>
+                                                    Gray
+                                                </option>
+                                                <option value="Silver"
+                                                    @if(!empty(@old('family_color')) && @old('family_color') == 'Silver')
+                                                        selected
+                                                    @elseif(!empty($product['family_color']) && $product['family_color'] == 'Silver')
+                                                        selected
+                                                    @endif>
+                                                    Silver
+                                                </option>
+                                                <option value="Golden"
+                                                    @if(!empty(@old('family_color')) && @old('family_color') == 'Golden')
+                                                        selected
+                                                    @elseif(!empty($product['family_color']) && $product['family_color'] == 'Golden')
+                                                        selected
+                                                    @endif>
+                                                    Golden
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="group_code">Group Code</label>
                                             <input type="text" name="group_code" class="form-control" id="group_code"
                                                    placeholder="Enter Group Code"
-                                                   @if(!empty($product['group_code'])) value="{{ $product['group_code'] }}" @else value="{{ old('group_code') }}" @endif>
+                                                   value="<?php echo $product['group_code'] ?? old('group_code') ?>">
                                         </div>
                                         <div class="form-group">
-                                            <label for="product_price">Product Price<span style="color: red">&nbsp;*</span></label>
-                                            <input type="text" name="product_price" class="form-control" id="product_price"
+                                            <label for="product_price">Product Price<span
+                                                    style="color: red">&nbsp;*</span></label>
+                                            <input type="text" name="product_price" class="form-control"
+                                                   id="product_price"
                                                    placeholder="Enter Product Price"
-                                                   @if(!empty($product['product_price'])) value="{{ $product['product_price'] }}" @else value="{{ old('product_price') }}" @endif required>
+                                                   value="<?php echo $product['product_price'] ?? old('product_price') ?>" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="product_discount">Product Discount (%)</label>
-                                            <input type="text" name="product_discount" class="form-control" id="product_discount"
+                                            <input type="text" name="product_discount" class="form-control"
+                                                   id="product_discount"
                                                    placeholder="Enter Product Discount (%)"
-                                                   @if(!empty($product['product_discount'])) value="{{ $product['product_discount'] }}" @else value="{{ old('product_discount') }}" @endif>
+                                                   value="<?php echo $product['product_discount'] ?? old('product_discount') ?>">
                                         </div>
                                         <div class="form-group">
                                             <label for="product_weight">Product Weight</label>
-                                            <input type="text" name="product_weight" class="form-control" id="product_weight"
+                                            <input type="text" name="product_weight" class="form-control"
+                                                   id="product_weight"
                                                    placeholder="Enter Product Weight"
-                                                   @if(!empty($product['product_weight'])) value="{{ $product['product_weight'] }}" @else value="{{ old('product_weight') }}" @endif>
+                                                   value="<?php echo $product['product_weight'] ?? old('product_weight') ?>">
                                         </div>
                                         <div class="form-group">
                                             <label for="product_video">Product Video</label>
-                                            <input type="file" name="product_video" class="form-control" id="product_video">
+                                            <input type="file" name="product_video" class="form-control"
+                                                   id="product_video">
                                         </div>
                                         <div class="form-group">
                                             <label for="fabric">Fabric</label>
                                             <select name="fabric" class="form-control">
                                                 <option value="">Select</option>
                                                 @foreach($productsFilters['fabricArray'] as $fabric)
-                                                    <option value="{{ $fabric }}">{{ $fabric }}</option>
+                                                    <option value="{{ $fabric }}"
+                                                    @if(!empty(@old('fabric')) && @old('fabric') == $fabric)
+                                                        selected
+                                                    @elseif(!empty($product['fabric']) && $product['fabric'] == $fabric)
+                                                        selected
+                                                    @endif>
+                                                    {{ $fabric }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -155,7 +260,13 @@
                                             <select name="sleeve" class="form-control">
                                                 <option value="">Select</option>
                                                 @foreach($productsFilters['sleeveArray'] as $sleeve)
-                                                    <option value="{{ $sleeve }}">{{ $sleeve }}</option>
+                                                    <option value="{{ $sleeve }}"
+                                                    @if(!empty(@old('sleeve')) && @old('sleeve') == $sleeve)
+                                                        selected
+                                                    @elseif(!empty($product['sleeve']) && $product['sleeve'] == $sleeve)
+                                                        selected
+                                                    @endif>
+                                                    {{ $sleeve }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -164,7 +275,13 @@
                                             <select name="pattern" class="form-control">
                                                 <option value="">Select</option>
                                                 @foreach($productsFilters['patternArray'] as $pattern)
-                                                    <option value="{{ $pattern }}">{{ $pattern }}</option>
+                                                    <option value="{{ $pattern }}"
+                                                    @if(!empty(@old('pattern')) && @old('pattern') == $pattern)
+                                                        selected
+                                                    @elseif(!empty($product['pattern']) && $product['pattern'] == $pattern)
+                                                        selected
+                                                    @endif>
+                                                    {{ $pattern }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -173,7 +290,13 @@
                                             <select name="fit" class="form-control">
                                                 <option value="">Select</option>
                                                 @foreach($productsFilters['fitArray'] as $fit)
-                                                    <option value="{{ $fit }}">{{ $fit }}</option>
+                                                    <option value="{{ $fit }}"
+                                                    @if(!empty(@old('fit')) && @old('fit') == $fit)
+                                                        selected
+                                                    @elseif(!empty($product['fit']) && $product['fit'] == $fit)
+                                                        selected
+                                                    @endif>
+                                                    {{ $fit }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -182,46 +305,53 @@
                                             <select name="occasion" class="form-control">
                                                 <option value="">Select</option>
                                                 @foreach($productsFilters['occasionArray'] as $occasion)
-                                                    <option value="{{ $occasion }}">{{ $occasion }}</option>
+                                                    <option value="{{ $occasion }}"
+                                                    @if(!empty(@old('occasion')) && @old('occasion') == $occasion)
+                                                        selected
+                                                    @elseif(!empty($product['occasion']) && $product['occasion'] == $occasion)
+                                                        selected
+                                                    @endif>
+                                                    {{ $occasion }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="description">Description</label>
                                             <textarea name="description" class="form-control" rows="3" id="description"
-                                                      placeholder="Enter Product Description">@if(!empty($roduct['description'])) {{ $roduct['description'] }} @else {{ old('description') }} @endif</textarea>
+                                                      placeholder="Enter Product Description"><?php echo $product['description'] ?? old('description') ?></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="wash_care">Wash Care</label>
                                             <textarea name="wash_care" class="form-control" rows="3" id="wash_care"
-                                                      placeholder="Enter Product Wash Care">@if(!empty($roduct['wash_care'])) {{ $roduct['wash_care'] }} @else {{ old('wash_care') }} @endif</textarea>
+                                                      placeholder="Enter Product Wash Care"><?php echo $product['wash_care'] ?? old('wash_care') ?></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="search_keywords">Search Keywords</label>
-                                            <textarea name="search_keywords" class="form-control" rows="3" id="search_keywords"
-                                                      placeholder="Enter Product Search Keywords">@if(!empty($roduct['search_keywords'])) {{ $roduct['search_keywords'] }} @else {{ old('search_keywords') }} @endif</textarea>
+                                            <textarea name="search_keywords" class="form-control" rows="3"
+                                                      id="search_keywords"
+                                                      placeholder="Enter Product Search Keywords"><?php echo $product['search_keywords'] ?? old('search_keywords') ?></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="meta_title">Meta Title</label>
                                             <input type="text" name="meta_title" class="form-control" id="meta_title"
                                                    placeholder="Enter Meta Title"
-                                                   @if(!empty($roduct['meta_title'])) value="{{ $roduct['meta_title'] }}" @else value="{{ old('meta_title') }}" @endif>
+                                                   value="<?php echo $product['meta_title'] ?? old('meta_title') ?>">
                                         </div>
                                         <div class="form-group">
                                             <label for="meta_description">Meta Description</label>
                                             <input type="text" name="meta_description" class="form-control"
                                                    id="meta_description" placeholder="Enter Meta Description"
-                                                   @if(!empty($product['meta_description'])) value="{{ $product['meta_description'] }}" @else value="{{ old('meta_description') }}" @endif>
+                                                   value="<?php echo $product['meta_description'] ?? old('meta_description') ?>">
                                         </div>
                                         <div class="form-group">
                                             <label for="meta_keywords">Meta Keywords</label>
                                             <input type="text" name="meta_keywords" class="form-control"
                                                    id="meta_keywords" placeholder="Enter Meta Keywords"
-                                                   @if(!empty($roduct['meta_keywords'])) value="{{ $roduct['meta_keywords'] }}" @else value="{{ old('meta_keywords') }}" @endif>
+                                                   value="<?php echo $product['meta_keywords'] ?? old('meta_keywords') ?>">
                                         </div>
                                         <div class="form-group">
                                             <label for="is_featured">Featured Item</label>
-                                            <input type="checkbox" name="is_featured" value="Yes">
+                                            <input type="checkbox" name="is_featured" value="Yes" @if($product['is_featured'] == 'Yes') checked @endif>
                                         </div>
                                     </div>
                                     <!-- /.card-body -->

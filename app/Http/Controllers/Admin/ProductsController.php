@@ -40,17 +40,16 @@ class ProductsController extends Controller
             // Add Product
             $title = "Add Product";
             $product = new Product();
-            $productData = [];
             $message = "Product added successfully.";
         } else {
             // Edit Product
             $title = "Edit Product";
-            $product = Product::with('category')->findOrFail($id);
+            $product = Product::find($id);
+            $message = "Product updated successfully.";
         }
 
         if ($request->isMethod('post')) {
             $data = $request->all();
-            dd($data);
             $request->validate([
                 'category_id' => 'required|max:255',
                 'product_name' => 'required|regex:/^[\pL\s\-]+$/u|max:200',
@@ -98,17 +97,20 @@ class ProductsController extends Controller
             $product->product_discount = $data['product_discount'] ?? 0;
             if (!empty($data['product_discount']) && $data['product_discount'] > 0) {
                 $product->discount_type = 'product';
-                $product->final_price = $data['final_price'] - ($data['final_price'] * $data['product_discount']) / 100;
+                $product->final_price = $data['product_price'] - ($data['product_price'] * $data['product_discount']) / 100;
             } else {
                 $getCategoryDiscount = Category::select('category_discount')->where('id', $data['category_id'])->first();
                 if ($getCategoryDiscount->category_discount == 0) {
                     $product->discount_type = '';
                     $product->final_price = $data['product_price'];
+                } else {
+                    $product->discount_type = 'category';
+                    $product->final_price = $data['product_price'] - ($data['product_price'] * $getCategoryDiscount->category_discount) / 100;
                 }
             }
 
             $product->description = $data['description'];
-            /*$product->search_keywords = $data['search_keywords'];*/
+            $product->search_keywords = $data['search_keywords'];
             $product->wash_care = $data['wash_care'];
             $product->fabric = $data['fabric'];
             $product->pattern = $data['pattern'];
@@ -131,7 +133,7 @@ class ProductsController extends Controller
         // Products Filters
         $productsFilters = Product::productsFilters();
 
-        return view('admin.products.add_edit_product', compact('title', 'getCategories', 'productsFilters'));
+        return view('admin.products.add_edit_product', compact('title', 'getCategories', 'productsFilters', 'product'));
     }
 
     public function deleteProduct($id)
