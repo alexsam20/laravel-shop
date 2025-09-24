@@ -50,6 +50,7 @@ class ProductsController extends Controller
 
         if ($request->isMethod('post')) {
             $data = $request->all();
+            dd($data);
             $request->validate([
                 'category_id' => 'required|max:255',
                 'product_name' => 'required|regex:/^[\pL\s\-]+$/u|max:200',
@@ -95,9 +96,17 @@ class ProductsController extends Controller
             $product->product_price = $data['product_price'];
             $product->product_weight = $data['product_weight'] ;
             $product->product_discount = $data['product_discount'] ?? 0;
-            /*$product->discount_type = $data['discount_type'];
-            $product->final_price = $data['final_price'];
-            $product->product_video = $data['product_video'];*/
+            if (!empty($data['product_discount']) && $data['product_discount'] > 0) {
+                $product->discount_type = 'product';
+                $product->final_price = $data['final_price'] - ($data['final_price'] * $data['product_discount']) / 100;
+            } else {
+                $getCategoryDiscount = Category::select('category_discount')->where('id', $data['category_id'])->first();
+                if ($getCategoryDiscount->category_discount == 0) {
+                    $product->discount_type = '';
+                    $product->final_price = $data['product_price'];
+                }
+            }
+
             $product->description = $data['description'];
             /*$product->search_keywords = $data['search_keywords'];*/
             $product->wash_care = $data['wash_care'];
