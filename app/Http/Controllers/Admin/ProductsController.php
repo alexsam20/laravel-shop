@@ -45,6 +45,7 @@ class ProductsController extends Controller
         } else {
             // Edit Product
             $title = "Edit Product";
+            $product = Product::with('category')->findOrFail($id);
         }
 
         if ($request->isMethod('post')) {
@@ -57,6 +58,32 @@ class ProductsController extends Controller
                 'family_color' => 'required|regex:/^[\pL\s\-]+$/u|max:200',
                 'product_price' => 'required|numeric',
             ]);
+
+            /*$messages = [
+                'category_id.required' => 'Category is required.',
+                'product_name.required' => 'Product Name is required.',
+                'product_name.regex' => 'Valid Product Name is required.',
+                'product_code.required' => 'Product Code is required.',
+                'product_code.regex' => 'Valid Product Code is required.',
+                'product_color.required' => 'Product Color is required.',
+                'product_color.regex' => 'Valid Product Color is required.',
+                'family_color.required' => 'Family Color is required.',
+                'family_color.regex' => 'Valid Family Color is required.',
+                'product_price.required' => 'Product Price is required.',
+                'product_price.numeric' => 'Valid Product Price must be numeric.',
+            ];*/
+
+            // Update Product Video
+            if ($request->hasFile('product_video')) {
+                $video_tmp = $request->file('product_video');
+                if ($video_tmp->isValid()) {
+                    $videoNameFromSave = time() . '-' . $video_tmp->getClientOriginalName();
+                    $video_tmp->move('front/video/', $videoNameFromSave);
+                    // Save Video Name in Product Table
+                    $product->product_video = $videoNameFromSave;
+                }
+            }
+
             // Save Product
             $product->category_id = $data['category_id'];
             $product->brand_id = $data['brand_id'] ?? 0;
@@ -67,7 +94,7 @@ class ProductsController extends Controller
             $product->group_code = $data['group_code'];
             $product->product_price = $data['product_price'];
             $product->product_weight = $data['product_weight'] ;
-            $product->product_discount = $data['product_discount'];
+            $product->product_discount = $data['product_discount'] ?? 0;
             /*$product->discount_type = $data['discount_type'];
             $product->final_price = $data['final_price'];
             $product->product_video = $data['product_video'];*/
