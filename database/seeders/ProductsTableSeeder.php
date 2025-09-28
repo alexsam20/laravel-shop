@@ -16,7 +16,7 @@ class ProductsTableSeeder extends Seeder
         $productsRecords = [
             [
                 'id' => 1,
-                'category_id' => 10,
+                'category_id' => 1,
                 'brand_id' => 0,
                 'product_name' => 'Blue T-Shirt',
                 'product_code' => 'BT001',
@@ -33,7 +33,7 @@ class ProductsTableSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'category_id' => 10,
+                'category_id' => 1,
                 'brand_id' => 0,
                 'product_name' => 'Red T-Shirt',
                 'product_code' => 'RT001',

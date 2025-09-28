@@ -69,7 +69,7 @@
                                             <td>{{ $product['product_color'] }}</td>
                                             <td>{{ $product['category']['category_name'] }}</td>
                                             <td>
-                                                @if($product['category']['parent_category']['category_name'])
+                                                @if($product['category']['parent_category'] !== null)
                                                     {{ $product['category']['parent_category']['category_name'] }}
                                                 @endif
                                             </td>
