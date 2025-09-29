@@ -178,6 +178,22 @@
                                             <label for="product_images">Product Image's (Recommend Size: 1040 x 1200)</label>
                                             <input type="file" name="product_images[]" class="form-control"
                                                    id="product_images" multiple>
+                                            <table cellpadding="4" cellspacing="4" style="margin: 5px;">
+                                                <tr>
+                                            @foreach($product['images'] as $image)
+                                                <td {{--style="background-color: #f9f9f9"--}}>
+                                                <a href="{{ url('front/images/products/large/' . $image['image']) }}" target="_blank">
+                                                    <img width="60px" src="{{ asset('front/images/products/small/' . $image['image']) }}">&nbsp;
+                                                    <a href="javascript:void(0)" record="product-images"
+                                                       recordid="{{ $image['id'] }}"
+                                                       class="confirmDelete"
+                                                       title="Delete Product Image"
+                                                       style="color: #3f6ed3;"><i class="fas fa-trash"></i></a>
+                                                </a>
+                                                </td>
+                                            @endforeach
+                                                </tr>
+                                            </table>
                                         </div>
                                         <div class="form-group">
                                             <label for="product_video">Product Video (Recommend Size: Less then 2MB)</label>

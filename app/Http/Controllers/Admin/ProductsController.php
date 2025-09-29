@@ -48,7 +48,9 @@ class ProductsController extends Controller
         } else {
             // Edit Product
             $title = "Edit Product";
-            $product = Product::find($id);
+            $product = Product::with('images')->find($id);
+            /*dump($product->getRelations());
+            dd($product['images']);*/
             $message = "Product updated successfully.";
         }
 
@@ -205,5 +207,26 @@ class ProductsController extends Controller
         Product::where('id', $id)->update(['product_video' => null]);
 
         return redirect()->back()->with('success_message', 'Product Video has been deleted successfully.');
+    }
+
+    public function deleteProductImage($id)
+    {
+        $productImage = ProductsImage::select('image')->where('id', $id)->first();
+        $smallImageFile = 'front/images/products/small/' . $productImage->image;
+        $mediumImageFile = 'front/images/products/medium/' . $productImage->image;
+        $largeImageFile = 'front/images/products/large/' . $productImage->image;
+        if (file_exists($smallImageFile)) {
+            unlink($smallImageFile);
+        }
+        if (file_exists($mediumImageFile)) {
+            unlink($mediumImageFile);
+        }
+        if (file_exists($largeImageFile)) {
+            unlink($largeImageFile);
+        }
+
+        ProductsImage::where('id', $id)->delete();
+
+        return redirect()->back()->with('success_message', 'Product Image has been deleted successfully.');
     }
 }
