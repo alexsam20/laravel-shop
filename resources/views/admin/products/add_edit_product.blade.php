@@ -175,6 +175,11 @@
                                                    value="<?php echo $product['product_weight'] ?? old('product_weight') ?>">
                                         </div>
                                         <div class="form-group">
+                                            <label for="product_images">Product Image's (Recommend Size: 1040 x 1200)</label>
+                                            <input type="file" name="product_images[]" class="form-control"
+                                                   id="product_images" multiple>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="product_video">Product Video (Recommend Size: Less then 2MB)</label>
                                             <input type="file" name="product_video" class="form-control"
                                                    id="product_video">

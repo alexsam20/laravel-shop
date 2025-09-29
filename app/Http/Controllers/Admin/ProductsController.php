@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductsImage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class ProductsController extends Controller
 {
@@ -124,6 +128,53 @@ class ProductsController extends Controller
                 $product->is_featured = $data['is_featured'];
             }
             $product->save();
+
+            if ($id === null) {
+                $product_id = DB::getPdo()->lastInsertId();
+            } else {
+                $product_id = $id;
+            }
+            // Upload Product Images
+            if ($request->hasFile('product_images')) {
+                $images = $request->file('product_images');
+                $i = 1;
+                foreach ($images as $key => $image) {
+                    // create image manager with desired driver
+                    $manager = new ImageManager(new Driver());
+                    // open an image file
+                    $img = $manager->read($image);
+                    // Get Image Extension
+                    $extension = $image->getClientOriginalExtension();
+                    // Generate New Image Name
+                    $imageName = 'product-' . rand(1111, 9999999) . '.' . $extension;
+                    // Create Path for Small, Medium Large Pictures
+                    $largeImagePath = 'front/images/products/large/' . $imageName;
+                    $mediumImagePath = 'front/images/products/medium/' . $imageName;
+                    $smallImagePath = 'front/images/products/small/' . $imageName;
+                    $size = $img->size();
+                    if ($size->isPortrait()) {
+                        $large_width = 1040; $large_height = 1200;
+                        $medium_width = 520; $medium_height = 600;
+                        $small_width = 260; $small_height = 300;
+                    } else {
+                        $large_width = 1200; $large_height = 1040;
+                        $medium_width = 520; $medium_height = 520;
+                        $small_width = 300; $small_height = 260;
+                    }
+
+                    $img->resize($large_width, $large_height)->save($largeImagePath);
+                    $img->resize($medium_width, $medium_height)->save($mediumImagePath);
+                    $img->resize($small_width, $small_height)->save($smallImagePath);
+
+                    // Insert Image Name in products_images table
+                    $productImage = new ProductsImage();
+                    $productImage->image = $imageName;
+                    $productImage->product_id = $product_id;
+                    $productImage->image_sort = $i;
+                    $productImage->save();
+                    $i++;
+                }
+            }
 
             return redirect('admin/products')->with('success_message', $message);
         }
