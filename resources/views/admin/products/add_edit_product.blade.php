@@ -178,18 +178,20 @@
                                             <label for="product_images">Product Image's (Recommend Size: 1040 x 1200)</label>
                                             <input type="file" name="product_images[]" class="form-control"
                                                    id="product_images" multiple>
-                                            <table cellpadding="4" cellspacing="4" style="margin: 5px;">
+                                            <table style="margin: 10px; padding: 5px">
                                                 <tr>
                                             @foreach($product['images'] as $image)
-                                                <td {{--style="background-color: #f9f9f9"--}}>
+                                                <td style="background-color: #f9f9f9; margin: 20px;">
                                                 <a href="{{ url('front/images/products/large/' . $image['image']) }}" target="_blank">
-                                                    <img width="60px" src="{{ asset('front/images/products/small/' . $image['image']) }}">&nbsp;
+                                                    <img width="60px" src="{{ asset('front/images/products/small/' . $image['image']) }}"></a>&nbsp;
+                                                    <input type="hidden" name="image[]" value="{{ $image['image'] }}">
+                                                    <input style="width: 30px;" type="text" name="image_sort[]" value="{{ $image['image_sort'] }}">
                                                     <a href="javascript:void(0)" record="product-images"
                                                        recordid="{{ $image['id'] }}"
                                                        class="confirmDelete"
                                                        title="Delete Product Image"
                                                        style="color: #3f6ed3;"><i class="fas fa-trash"></i></a>
-                                                </a>
+
                                                 </td>
                                             @endforeach
                                                 </tr>
