@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductsAttributes;
 use App\Models\ProductsImage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -56,6 +57,7 @@ class ProductsController extends Controller
 
         if ($request->isMethod('post')) {
             $data = $request->all();
+
             $request->validate([
                 'category_id' => 'required|max:255',
                 'product_name' => 'required|regex:/^[\pL\s\-]+$/u|max:200',
@@ -185,6 +187,29 @@ class ProductsController extends Controller
                         ProductsImage::where(['product_id' => $product_id, 'image' => $image])
                             ->update(['image_sort' => $data['image_sort'][$key]]);
                     }
+                }
+            }
+
+            foreach ($data['sku'] as $key => $value) {
+                if (!empty($value)) {
+                    // SKU already exists check
+                    $countSKU = ProductsAttributes::where('sku', $value)->count();
+                    if ($countSKU > 0) {
+                        return redirect()->back()->with('error', 'SKU already exists. Please try another SKU.');
+                    }
+                    // Size already exists check
+                    $countSize = ProductsAttributes::where(['product_id' => $product_id, 'size' => $data['size'][$key]])->count();
+                    if ($countSize > 0) {
+                        return redirect()->back()->with('error', 'Size already exists. Please try another Size.');
+                    }
+
+                    $attribute = new ProductsAttributes();
+                    $attribute->product_id = $product_id;
+                    $attribute->sku = $value;
+                    $attribute->size = $data['size'][$key];
+                    $attribute->price = $data['price'][$key];
+                    $attribute->stock = $data['stock'][$key];
+                    $attribute->save();
                 }
             }
 
