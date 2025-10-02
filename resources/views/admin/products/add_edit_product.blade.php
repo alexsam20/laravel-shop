@@ -225,12 +225,13 @@
                                                     <th>Actions</th>
                                                 </tr>
                                                 @foreach($product['attributes'] as $attribute)
+                                                    <input type="hidden" name="attributeId[]" value="{{ $attribute['id'] }}" />
                                                     <tr>
                                                         <td>{{ $attribute['id'] }}</td>
                                                         <td>{{ $attribute['size'] }}</td>
                                                         <td>{{ $attribute['sku'] }}</td>
-                                                        <td>{{ $attribute['price'] }}</td>
-                                                        <td>{{ $attribute['stock'] }}</td>
+                                                        <td><input style="width: 100px;" type="number" name="price[]" value="{{ $attribute['price'] }}"></td>
+                                                        <td><input style="width: 100px;" type="number" name="stock[]" value="{{ $attribute['stock'] }}"></td>
                                                         <td></td>
                                                     </tr>
                                                 @endforeach

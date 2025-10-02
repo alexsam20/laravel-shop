@@ -50,7 +50,7 @@ class ProductsController extends Controller
             // Edit Product
             $title = "Edit Product";
             $product = Product::with(['images', 'attributes'])->find($id);
-            /*dd($product);*/
+            /*dd($product)*/;
             $message = "Product updated successfully.";
         }
 
@@ -189,6 +189,7 @@ class ProductsController extends Controller
                 }
             }
 
+            // Add Product Attributes
             foreach ($data['sku'] as $key => $value) {
                 if (!empty($value)) {
                     // SKU already exists check
@@ -209,6 +210,14 @@ class ProductsController extends Controller
                     $attribute->price = $data['price'][$key];
                     $attribute->stock = $data['stock'][$key];
                     $attribute->save();
+                }
+            }
+
+            // Edit Product Attributes
+            foreach ($data['attributeId'] as $attributes => $attribute) {
+                if (!empty($attribute)) {
+                    ProductsAttributes::where(['id' => $data['attributeId'][$attributes]])
+                        ->update(['price' => $data['price'][$attributes], 'stock' => $data['stock'][$attributes]]);
                 }
             }
 
