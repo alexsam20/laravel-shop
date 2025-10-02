@@ -43,9 +43,18 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('products', [ProductsController::class, 'products'])->name('products');
         Route::post('update-product-status', [ProductsController::class, 'updateProductStatus'])->name('update-product-status');
         Route::get('delete-product/{id?}', [ProductsController::class, 'deleteProduct'])->name('delete-product');
-        Route::get('delete-product-video/{id?}', [ProductsController::class, 'deleteProductVideo'])->name('delete-product-video');
-        Route::get('delete-product-images/{id?}', [ProductsController::class, 'deleteProductImage'])->name('delete-product-images');
         Route::match(['get','post'], 'add-edit-product/{id?}', [ProductsController::class, 'addEditProduct'] )->name('add-edit-product');
+
+        // Product Images
+        Route::get('delete-product-images/{id?}', [ProductsController::class, 'deleteProductImage'])->name('delete-product-images');
+
+        // Product Video
+        Route::get('delete-product-video/{id?}', [ProductsController::class, 'deleteProductVideo'])->name('delete-product-video');
+
+        // Product Attributes
+        Route::post('update-attribute-status', [ProductsController::class, 'updateAttributeStatus'])->name('update-attribute-status');
+        Route::get('delete-attribute/{id?}', [ProductsController::class, 'deleteAttribute'])->name('delete-attribute');
+
     });
 
 });
