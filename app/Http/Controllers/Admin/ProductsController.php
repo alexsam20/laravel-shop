@@ -49,9 +49,8 @@ class ProductsController extends Controller
         } else {
             // Edit Product
             $title = "Edit Product";
-            $product = Product::with('images')->find($id);
-            /*dump($product->getRelations());
-            dd($product['images']);*/
+            $product = Product::with(['images', 'attributes'])->find($id);
+            /*dd($product);*/
             $message = "Product updated successfully.";
         }
 

@@ -213,7 +213,30 @@
                                             @endif
                                             </div>
                                         </div>
-                                        <label>Product Attributes</label>
+                                        <div class="form-group">
+                                            <label>Added Product Attributes</label>
+                                            <table style="background-color: #52585e; width: 50%" cellpadding="5">
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Size</th>
+                                                    <th>SKU</th>
+                                                    <th>Price</th>
+                                                    <th>Stock</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                                @foreach($product['attributes'] as $attribute)
+                                                    <tr>
+                                                        <td>{{ $attribute['id'] }}</td>
+                                                        <td>{{ $attribute['size'] }}</td>
+                                                        <td>{{ $attribute['sku'] }}</td>
+                                                        <td>{{ $attribute['price'] }}</td>
+                                                        <td>{{ $attribute['stock'] }}</td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endforeach
+                                            </table>
+                                        </div>
+                                        <label>Add Attributes</label>
                                         <div class="form-group border border-info p-2">
                                             <div class="field_wrapper">
                                                 <div>
