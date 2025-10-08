@@ -35,15 +35,15 @@
                         @endif
                         <div class="card">
                             <div class="card-header">
-                                {{--@if((isset($productsModule['edit_access']) && $productsModule['edit_access'] == 1) ||
-                                    (isset($productsModule['full_access']) && $productsModule['full_access'] == 1))--}}
+                                @if((isset($productsModule['edit_access']) && $productsModule['edit_access'] == 1) ||
+                                    (isset($productsModule['full_access']) && $productsModule['full_access'] == 1))
                                     <h3 class="card-title">Products</h3>
                                     <a class="btn btn-block btn-primary"
                                        style="max-width: 150px; float: right; display: inline-block"
                                        href="{{ url('admin/add-edit-product') }}">
                                         Add Product
                                     </a>
-                                {{--@endif--}}
+                                @endif
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -75,8 +75,8 @@
                                             </td>
                                             {{--<td>{{ date("F j, Y, g:i a", strtotime($product['created_at'])) }}</td>--}}
                                             <td style="text-align: center">
-                                                {{--@if((isset($productsModule['edit_access']) && $productsModule['edit_access'] == 1) ||
-                                                    (isset($productsModule['full_access']) && $productsModule['full_access'] == 1))--}}
+                                                @if((isset($productsModule['edit_access']) && $productsModule['edit_access'] == 1) ||
+                                                    (isset($productsModule['full_access']) && $productsModule['full_access'] == 1))
                                                     @if($product['status'] === 1)
                                                         <a class="updateProductStatus"
                                                            id="product-{{ $product['id'] }}"
@@ -98,14 +98,14 @@
                                                     <a href="{{ url('admin/add-edit-product/' . $product['id']) }}"
                                                        style="color: #3f6ed3;"><i class="fas fa-edit"></i></a>
                                                     &nbsp;
-                                                {{--@endif--}}
-                                                {{--@if(isset($productsModule['full_access']) && $productsModule['full_access'] == 1)--}}
+                                                @endif
+                                                @if(isset($productsModule['full_access']) && $productsModule['full_access'] == 1)
                                                     <a href="javascript:void(0)" record="product"
                                                        recordid="{{ $product['id'] }}"
                                                        class="confirmDelete"
                                                        title="Delete Product {{ $product['product_name'] }}"
                                                        style="color: #3f6ed3;"><i class="fas fa-trash"></i></a>
-                                                {{--@endif--}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

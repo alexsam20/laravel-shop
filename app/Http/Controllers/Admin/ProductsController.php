@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminsRole;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductsAttributes;
 use App\Models\ProductsImage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
 
@@ -17,10 +20,26 @@ class ProductsController extends Controller
 {
     public function products()
     {
+        Session::put('page', 'products');
         $products = Product::with('category')->get()->toArray();
-//        dd($products);
 
-        return view('admin.products.products', compact('products'));
+        // Set Admin/Sab Admins Permissions for Products
+        $productsModuleCount = AdminsRole::where(['subadmin_id' => Auth::guard('admin')->user()->id, 'module' => 'products'])->count();
+        $productsModule = [];
+        if (Auth::guard('admin')->user()->type == 'admin') {
+            $productsModule['view_access'] = 1;
+            $productsModule['edit_access'] = 1;
+            $productsModule['full_access'] = 1;
+        } else if ($productsModuleCount == 0) {
+            $message = "This feature is restricted for you";
+            return redirect('admin/dashboard')->with('error_message', $message);
+        } else {
+            $productsModule = AdminsRole::where(['subadmin_id' => Auth::guard('admin')->user()->id, 'module' => 'products'])
+                ->first()
+                ->toArray();
+        }
+
+        return view('admin.products.products', compact('products', 'productsModule'));
     }
 
     public function updateProductStatus(Request $request): JsonResponse
@@ -41,6 +60,7 @@ class ProductsController extends Controller
 
     public function addEditProduct(Request $request, $id = null)
     {
+        Session::put('page', 'products');
         if ($id == null) {
             // Add Product
             $title = "Add Product";

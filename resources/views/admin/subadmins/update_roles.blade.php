@@ -97,6 +97,11 @@
                                         @php $editCategories = ($role['edit_access'] == 1) ? 'checked' : ''; @endphp
                                         @php $fullCategories = ($role['full_access'] == 1) ? 'checked' : ''; @endphp
                                     @endif
+                                    @if($role['module'] == 'products')
+                                        @php $viewProducts = ($role['view_access'] == 1) ? 'checked' : ''; @endphp
+                                        @php $editProducts = ($role['edit_access'] == 1) ? 'checked' : ''; @endphp
+                                        @php $fullProducts = ($role['full_access'] == 1) ? 'checked' : ''; @endphp
+                                    @endif
                                 @endforeach
                             @endif
                             <div class="card-body">
@@ -107,10 +112,16 @@
                                     <input type="checkbox" name="cms_pages[full]" value="1" @if(isset($fullCMSPages)) {{ $fullCMSPages }} @endif>&nbsp;Full Access &nbsp;&nbsp;
                                 </div>
                                 <div class="form-group">
-                                    <label style="width: 130px;" for="cms_pages">Categories:</label>
+                                    <label style="width: 130px;" for="categories">Categories:</label>
                                     <input type="checkbox" name="categories[view]" value="1" @if(isset($viewCategories)) {{ $viewCategories }} @endif>&nbsp;View Access &nbsp;&nbsp;
                                     <input type="checkbox" name="categories[edit]" value="1" @if(isset($editCategories)) {{ $editCategories }} @endif>&nbsp;View/Edit Access &nbsp;&nbsp;
                                     <input type="checkbox" name="categories[full]" value="1" @if(isset($fullCategories)) {{ $fullCategories }} @endif>&nbsp;Full Access &nbsp;&nbsp;
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 130px;" for="products">Products:</label>
+                                    <input type="checkbox" name="products[view]" value="1" @if(isset($viewProducts)) {{ $viewProducts }} @endif>&nbsp;View Access &nbsp;&nbsp;
+                                    <input type="checkbox" name="products[edit]" value="1" @if(isset($editProducts)) {{ $editProducts }} @endif>&nbsp;View/Edit Access &nbsp;&nbsp;
+                                    <input type="checkbox" name="products[full]" value="1" @if(isset($fullProducts)) {{ $fullProducts }} @endif>&nbsp;Full Access &nbsp;&nbsp;
                                 </div>
                             </div>
                             <!-- /.card-body -->
