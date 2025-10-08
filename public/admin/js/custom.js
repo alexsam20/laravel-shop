@@ -68,6 +68,29 @@ $(document).ready(function () {
         });
     });
 
+    // Update Brand Status
+    $(document).on("click", ".updateBrandStatus", function () {
+        const status = $(this).children("i").attr("status");
+        const brand_id = $(this).attr("brand_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "post",
+            url: "/admin/update-brand-status",
+            data:{status: status, brand_id: brand_id},
+            success: function (resp) {
+                if (resp['status'] == 0){
+                    $("#brand-"+brand_id).html('<i class="fas fa-toggle-off" style="color: grey" status="Inactive"></i>');
+                }else if (resp['status'] == 1) {
+                    $("#brand-"+brand_id).html('<i class="fas fa-toggle-on" style="color: #3f6ed3" status="Active"></i>');
+                }
+            }, error: function () {
+                alert("Error");
+            }
+        });
+    });
+
     // Confirm the deletion of the CMS Page
     /*$(document).on("click", ".confirmDelete", function () {
         const name = $(this).attr("name");

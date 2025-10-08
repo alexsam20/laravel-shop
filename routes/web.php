@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CmsController;
 use App\Http\Controllers\Admin\ProductsController;
@@ -54,6 +55,11 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // Product Attributes
         Route::post('update-attribute-status', [ProductsController::class, 'updateAttributeStatus'])->name('update-attribute-status');
         Route::get('delete-attribute/{id?}', [ProductsController::class, 'deleteAttribute'])->name('delete-attribute');
+
+        // Brands
+        Route::get('brands', [BrandController::class, 'brands'])->name('brands');
+        Route::post('update-brand-status', [BrandController::class, 'updateBrandStatus'])->name('update-brand-status');
+        Route::get('delete-brand/{id?}', [BrandController::class, 'deleteBrand'])->name('delete-brand');
 
     });
 
