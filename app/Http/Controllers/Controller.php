@@ -31,6 +31,8 @@ abstract class Controller
             }
         } else if (!empty($data['current_image'])) {
             return $data['current_image'];
+        } else if (!empty($data['current_logo'])) {
+            return $data['current_logo'];
         } else {
             return "";
         }

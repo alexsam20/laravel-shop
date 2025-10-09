@@ -35,15 +35,15 @@
                         @endif
                         <div class="card">
                             <div class="card-header">
-                                @if((isset($brandsModule['edit_access']) && $brandsModule['edit_access'] == 1) ||
-                                    (isset($brandsModule['full_access']) && $brandsModule['full_access'] == 1))
+                               {{-- @if((isset($brandsModule['edit_access']) && $brandsModule['edit_access'] == 1) ||
+                                    (isset($brandsModule['full_access']) && $brandsModule['full_access'] == 1))--}}
                                     <h3 class="card-title">Brands</h3>
                                     <a class="btn btn-block btn-primary"
                                        style="max-width: 150px; float: right; display: inline-block"
                                        href="{{ url('admin/add-edit-brand') }}">
                                         Add Brand
                                     </a>
-                                @endif
+                                {{--@endif--}}
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">

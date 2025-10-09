@@ -60,6 +60,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('brands', [BrandController::class, 'brands'])->name('brands');
         Route::post('update-brand-status', [BrandController::class, 'updateBrandStatus'])->name('update-brand-status');
         Route::get('delete-brand/{id?}', [BrandController::class, 'deleteBrand'])->name('delete-brand');
+        Route::match(['get','post'],'add-edit-brand/{id?}', [BrandController::class, 'addEditBrand'])->name('add-edit-brand');
+        Route::get('delete-brand-image/{id?}', [BrandController::class, 'deleteBrandImage'])->name('delete-brand-image');
+        Route::get('delete-brand-logo/{id?}', [BrandController::class, 'deleteLogoImage'])->name('delete-brand-logo');
 
     });
 
