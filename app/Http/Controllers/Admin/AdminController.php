@@ -114,10 +114,10 @@ class AdminController extends Controller
             // Update Admin Details
             Admin::where('email', $this->getGuardUser()->email)
                 ->update([
-                'name' => $data['admin_name'],
-                'mobile' => $data['admin_mobile'],
-                'image' => $imageName,
-            ]);
+                    'name' => $data['admin_name'],
+                    'mobile' => $data['admin_mobile'],
+                    'image' => $imageName,
+                ]);
 
             return $this->backWithMessage('success_message', 'Admin details updated successfully.');
         }
@@ -236,18 +236,17 @@ class AdminController extends Controller
             AdminsRole::where('subadmin_id', $id)->delete();
 
             // Add new roles for Subadmin Dynamically
-            $recordRole = new AdminsRole();
             foreach ($data as $key => $value) {
-                $recordRole->view_access = $value['view'] ?? 0;
-                $recordRole->edit_access = $value['edit'] ?? 0;
-                $recordRole->full_access = $value['full'] ?? 0;
+                AdminsRole::where('subadmin_id', $id)
+                    ->insert([
+                        'subadmin_id' => $id,
+                        'module' => $key,
+                        'view_access' => $value['view'] ?? 0,
+                        'edit_access' => $value['edit'] ?? 0,
+                        'full_access' => $value['full'] ?? 0,
+                    ]);
             }
-            $recordRole->subadmin_id = $id;
-            $recordRole->module = $key;
-
-            if ($recordRole->save()) {
-                $this->backWithMessage('success_message', 'Sub Admin Roles updated successfully.');
-            }
+            return $this->backWithMessage('success_message', 'Sub Admin Roles updated successfully.');
         }
 
         $subadminRoles = AdminsRole::where('subadmin_id', $id)->get()->toArray();
