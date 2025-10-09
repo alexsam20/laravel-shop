@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminsRole;
 use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Contracts\View\Factory;
@@ -11,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class BrandController extends Controller
@@ -20,7 +22,23 @@ class BrandController extends Controller
         Session::put('page', 'brands');
         $brands = Brand::all();
 
-        return view('admin.brands.brands', compact('brands'));
+        // Set Admin/Sab Admins Permissions for Brands
+        $brandsModuleCount = AdminsRole::where(['subadmin_id' => Auth::guard('admin')->user()->id, 'module' => 'brands'])->count();
+        $brandsModule = [];
+        if (Auth::guard('admin')->user()->type == 'admin') {
+            $brandsModule['view_access'] = 1;
+            $brandsModule['edit_access'] = 1;
+            $brandsModule['full_access'] = 1;
+        } else if ($brandsModuleCount == 0) {
+            $message = "This feature is restricted for you";
+            return redirect('admin/dashboard')->with('error_message', $message);
+        } else {
+            $brandsModule = AdminsRole::where(['subadmin_id' => Auth::guard('admin')->user()->id, 'module' => 'brands'])
+                ->first()
+                ->toArray();
+        }
+
+        return view('admin.brands.brands', compact('brands', 'brandsModule'));
     }
 
     public function addEditBrand(Request $request, $id = null): View|Factory|Redirector|RedirectResponse
@@ -121,7 +139,7 @@ class BrandController extends Controller
         if (file_exists($brandImagePath)) {
             unlink($brandImagePath);
         }
-        // Remove Brand Images from categories table
+        // Remove Brand Images from brands table
         Brand::where('id', $id)->update(['brand_image' => null]);
 
         return redirect()->back()->with('success_message', 'Brand deleted successfully.');
@@ -137,7 +155,7 @@ class BrandController extends Controller
         if (file_exists($logoImagePath)) {
             unlink($logoImagePath);
         }
-        // Remove Logo Images from categories table
+        // Remove Logo Images from brands table
         Brand::where('id', $id)->update(['brand_logo' => null]);
 
         return redirect()->back()->with('success_message', 'Logo deleted successfully.');

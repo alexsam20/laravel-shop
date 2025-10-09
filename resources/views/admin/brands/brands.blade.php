@@ -35,15 +35,15 @@
                         @endif
                         <div class="card">
                             <div class="card-header">
-                               {{-- @if((isset($brandsModule['edit_access']) && $brandsModule['edit_access'] == 1) ||
-                                    (isset($brandsModule['full_access']) && $brandsModule['full_access'] == 1))--}}
+                                @if((isset($brandsModule['edit_access']) && $brandsModule['edit_access'] == 1) ||
+                                    (isset($brandsModule['full_access']) && $brandsModule['full_access'] == 1))
                                     <h3 class="card-title">Brands</h3>
                                     <a class="btn btn-block btn-primary"
                                        style="max-width: 150px; float: right; display: inline-block"
                                        href="{{ url('admin/add-edit-brand') }}">
                                         Add Brand
                                     </a>
-                                {{--@endif--}}
+                                @endif
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -65,8 +65,8 @@
                                             <td>{{ $brand['url'] }}</td>
                                             <td>{{ date("F j, Y, g:i a", strtotime($brand['created_at'])) }}</td>
                                             <td style="text-align: center">
-                                                {{--@if((isset($brandsModule['edit_access']) && $brandsModule['edit_access'] == 1) ||
-                                                    (isset($brandsModule['full_access']) && $brandsModule['full_access'] == 1))--}}
+                                                @if((isset($brandsModule['edit_access']) && $brandsModule['edit_access'] == 1) ||
+                                                    (isset($brandsModule['full_access']) && $brandsModule['full_access'] == 1))
                                                     @if($brand['status'] === 1)
                                                         <a class="updateBrandStatus"
                                                            id="brand-{{ $brand['id'] }}"
@@ -88,14 +88,14 @@
                                                     <a href="{{ url('admin/add-edit-brand/' . $brand['id']) }}"
                                                        style="color: #3f6ed3;"><i class="fas fa-edit"></i></a>
                                                     &nbsp;
-                                                {{--@endif--}}
-                                                {{--@if(isset($brandsModule['full_access']) && $brandsModule['full_access'] == 1)--}}
+                                                @endif
+                                                @if(isset($brandsModule['full_access']) && $brandsModule['full_access'] == 1)
                                                     <a href="javascript:void(0)" record="brand"
                                                        recordid="{{ $brand['id'] }}"
                                                        class="confirmDelete"
                                                        name="CMS brand" title="Delete Brand"
                                                        style="color: #3f6ed3;"><i class="fas fa-trash"></i></a>
-                                                {{--@endif--}}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

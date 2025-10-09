@@ -102,6 +102,11 @@
                                         @php $editProducts = ($role['edit_access'] == 1) ? 'checked' : ''; @endphp
                                         @php $fullProducts = ($role['full_access'] == 1) ? 'checked' : ''; @endphp
                                     @endif
+                                    @if($role['module'] == 'brands')
+                                        @php $viewBrands = ($role['view_access'] == 1) ? 'checked' : ''; @endphp
+                                        @php $editBrands = ($role['edit_access'] == 1) ? 'checked' : ''; @endphp
+                                        @php $fullBrands = ($role['full_access'] == 1) ? 'checked' : ''; @endphp
+                                    @endif
                                 @endforeach
                             @endif
                             <div class="card-body">
@@ -122,6 +127,12 @@
                                     <input type="checkbox" name="products[view]" value="1" @if(isset($viewProducts)) {{ $viewProducts }} @endif>&nbsp;View Access &nbsp;&nbsp;
                                     <input type="checkbox" name="products[edit]" value="1" @if(isset($editProducts)) {{ $editProducts }} @endif>&nbsp;View/Edit Access &nbsp;&nbsp;
                                     <input type="checkbox" name="products[full]" value="1" @if(isset($fullProducts)) {{ $fullProducts }} @endif>&nbsp;Full Access &nbsp;&nbsp;
+                                </div>
+                                <div class="form-group">
+                                    <label style="width: 130px;" for="brands">Brands:</label>
+                                    <input type="checkbox" name="brands[view]" value="1" @if(isset($viewBrands)) {{ $viewBrands }} @endif>&nbsp;View Access &nbsp;&nbsp;
+                                    <input type="checkbox" name="brands[edit]" value="1" @if(isset($editBrands)) {{ $editBrands }} @endif>&nbsp;View/Edit Access &nbsp;&nbsp;
+                                    <input type="checkbox" name="brands[full]" value="1" @if(isset($fullBrands)) {{ $fullBrands }} @endif>&nbsp;Full Access &nbsp;&nbsp;
                                 </div>
                             </div>
                             <!-- /.card-body -->
