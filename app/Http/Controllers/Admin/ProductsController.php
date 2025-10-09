@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdminsRole;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductsAttributes;
@@ -234,10 +235,12 @@ class ProductsController extends Controller
             }
 
             // Edit Product Attributes
-            foreach ($data['attributeId'] as $attributes => $attribute) {
-                if (!empty($attribute)) {
-                    ProductsAttributes::where(['id' => $data['attributeId'][$attributes]])
-                        ->update(['price' => $data['price'][$attributes], 'stock' => $data['stock'][$attributes]]);
+            if (isset($data['attributeId'])) {
+                foreach ($data['attributeId'] as $attributes => $attribute) {
+                    if (!empty($attribute)) {
+                        ProductsAttributes::where(['id' => $data['attributeId'][$attributes]])
+                            ->update(['price' => $data['price'][$attributes], 'stock' => $data['stock'][$attributes]]);
+                    }
                 }
             }
 
@@ -246,10 +249,12 @@ class ProductsController extends Controller
 
         // Get Categories
         $getCategories = Category::getCategories();
+        // Get Brands
+        $getBrands  = Brand::where('status', 1)->get()->toArray();
         // Products Filters
         $productsFilters = Product::productsFilters();
 
-        return view('admin.products.add_edit_product', compact('title', 'getCategories', 'productsFilters', 'product'));
+        return view('admin.products.add_edit_product', compact('title', 'getCategories', 'productsFilters', 'product', 'getBrands'));
     }
 
     public function deleteProduct($id)

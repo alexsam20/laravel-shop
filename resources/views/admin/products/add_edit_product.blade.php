@@ -105,6 +105,23 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
+                                            <label for="brand_id">Select Brand<span
+                                                    style="color: red">&nbsp;*</span></label>
+                                            <select name="brand_id" id="brand_id"  class="form-control">
+                                                <option value="">Select</option>
+                                                @foreach($getBrands as $brand)
+                                                    <option
+                                                        @if(!empty(@old('brand_id')) && $brand['id'] == @old('brand_id'))
+                                                            selected
+                                                        @elseif(!empty($product['brand_id']) && $product['brand_id'] == $brand['id'])
+                                                            selected
+                                                        @endif
+                                                        value="{{ $brand['id'] }}">{{ $brand['brand_name'] }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
                                             <label for="product_name">Product Name<span
                                                     style="color: red">&nbsp;*</span></label>
                                             <input type="text" name="product_name" class="form-control"
